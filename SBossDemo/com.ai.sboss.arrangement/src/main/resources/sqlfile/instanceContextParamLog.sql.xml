@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLDescribe>
+	<sql name="IInstanceContextParamLogDAO.queryInstanceContextParamLogByFlowLog" type="hql" exe="select">
+		from InstanceContextParamLogEntity c 
+		left join fetch c.jointInstanceFlowLog l
+		where l.uid = :jointInstanceFlowLogId
+	</sql>
+</SQLDescribe>

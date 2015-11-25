@@ -1,0 +1,18 @@
+{
+    "arrangementInstance": {
+        "arrangementid": "2345678",
+        "businessid": "3456789",
+        "creator": "1234235",
+        "creatorScope": "producer",
+        "displayName": "输入你的流程名",
+        "jointinstances": [
+            {
+                "jointid": "23545",
+                "offsetVisible": "both",
+                "absOffsettime": 6000,
+                "relateOffsettime": 32000,
+                "expandTypeId":"34567"
+            }
+        ]
+    }
+}

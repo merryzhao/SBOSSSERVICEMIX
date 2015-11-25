@@ -1,0 +1,45 @@
+{
+"data": {
+"offerId": 201507271252,
+"offerName": "Mei Fu Family Dinner",
+"serviceIntroUrl": "http://i1.s2.dpfile.com/pc/ee4bfada217e3e7dc70a5d872c284e9c(700x700)/thumb.jpg",
+"serviceThumbnailUrl": "",
+"serviceProviderUrl": "http://baike.baidu.com/picture/3509924/3509924/0/b03533fa828ba61efc20a0f64134970a314e5918.html?fr=lemma&ct=single",
+"serviceIntro": "Provide Health and high quality family dinner",
+"serviceProvider": "",
+"serviceRating": 5,
+"servicePrice": "￥700/6PEOPLE",
+"offerProcess": [
+{
+"stepNum": 1,
+"stepDesc": "Preparation",
+"timeOffset": -60
+},
+{
+"stepNum": 2,
+"stepDesc": "Set off",
+"timeOffset": -20
+},
+{
+"stepNum": 3,
+"stepDesc": "Arrive home",
+"timeOffset": 0
+},
+{
+"stepNum": 4,
+"stepDesc":"Chopping",
+"timeOffset": 20
+},
+{
+"stepNum": 5,
+"stepDesc":"Cooking",
+"timeOffset": 60
+},
+{
+"stepNum": 5,
+"stepDesc":"Done",
+"timeOffset": 105
+}
+]
+}
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <!-- Uncomment and add your base-package here:-->
+    <context:component-scan
+    	base-package="com.ai.sboss.arrangement , 
+            com.ai.sboss.arrangement.engine.* ,
+            com.ai.sboss.arrangement.entity.*, 
+            com.ai.sboss.arrangement.event.*,
+            com.ai.sboss.arrangement.exception.*,
+            com.ai.sboss.arrangement.service.*,
+            com.ai.sboss.arrangement.engine.dao.*,
+            com.ai.sboss.arrangement.service.camel.*，
+            com.ai.sboss.arrangement.utils.* " />
+
+    <!-- 监听spring容器是否启动完成，并进行SQL/HQL文件的初始化 -->
+    <bean class="com.ai.sboss.arrangement.engine.startup.SQLFileListener">
+    	<property name="hqlfiles">
+    		<list>
+    			<value>sqlfile/joint.sql.xml</value>
+    			<value>sqlfile/arrangement.sql.xml</value>
+    			<value>sqlfile/jointinputparam.sql.xml</value>
+    			<value>sqlfile/jointoutputparam.sql.xml</value>
+    			<value>sqlfile/jointtrademapping.sql.xml</value>
+    			<value>sqlfile/arrangementjointmapping.sql.xml</value>
+    			<value>sqlfile/arrangementselfmapping.sql.xml</value>
+    			<value>sqlfile/jointinstance.sql.xml</value>
+    			<value>sqlfile/arrangementinstance.sql.xml</value>
+    			<value>sqlfile/instanceContextParam.sql.xml</value>
+    			<value>sqlfile/instanceContextParamLog.sql.xml</value>
+    			<value>sqlfile/jointInstanceFlow.sql.xml</value>
+    			<value>sqlfile/jointInstanceFlowLog.sql.xml</value>
+    			<value>sqlfile/jointinputparaminstance.sql.xml</value>
+    			<value>sqlfile/jointoutputparaminstance.sql.xml</value>
+    		</list>
+    	</property>
+    </bean>
+    
+    <!-- 系统上下文的监听器，这个监听器主要记录已经完成启动的spring的上下文 -->
+    <bean class="com.ai.sboss.arrangement.engine.startup.SystemStartupContextListener" />
+    
+    <!-- 这就调用Camel-URL所使用的线程池了 -->
+	<bean id="camel_url_threadpool_executor" scope="singleton" class="java.util.concurrent.ThreadPoolExecutor">
+		<constructor-arg value="10" type="int"></constructor-arg>
+		<constructor-arg value="10" type="int"></constructor-arg>
+		<constructor-arg value="3000" type="long"></constructor-arg>
+		<constructor-arg value="MILLISECONDS" type="java.util.concurrent.TimeUnit"></constructor-arg>
+		<constructor-arg ref="camelLinkedBlockingQueue"></constructor-arg>
+	</bean>
+	<bean id="camelLinkedBlockingQueue" class="java.util.concurrent.LinkedBlockingQueue"></bean>
+	<!-- 这是调用camel-url所使用的线程执行类 -->
+	<bean id="camelUrlRequestCallable" scope="prototype" class="com.ai.sboss.arrangement.engine.local.CamelUrlRequestCallable"></bean>
+</beans>

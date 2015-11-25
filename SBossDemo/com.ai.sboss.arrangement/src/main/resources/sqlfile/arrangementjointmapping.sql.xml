@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLDescribe>
+	<sql name="IArrangementJointMappingDAO.getArrangementJointmappingSet" type="hql" exe="select">
+		from ArrangementJointMappingEntity u 
+		left join fetch u.joint joint
+		where u.parentArrangement.uid = :arrangementuid
+	</sql>
+	
+</SQLDescribe>

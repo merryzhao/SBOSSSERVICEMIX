@@ -1,0 +1,40 @@
+{
+"data": {
+"offerId": 201507271456,
+"offerName": "Hanting Hotel Service",
+"serviceIntroUrl": "http://ws-www.hantinghotels.com/images/hz2013/qj_brand.jpg",
+"serviceThumbnailUrl": "",
+"serviceProviderUrl": "http://img3.douban.com/icon/up59465321-2.jpg",
+"serviceIntro": "The hotel is an imposing structure on the outside, but very comfortable inside",
+"serviceProvider": "",
+"serviceRating": 5,
+"servicePrice": "￥270/DAY",
+"offerProcess": [
+{
+"stepNum": 1,
+"stepDesc": "Preorder",
+"timeOffset": -60
+},
+{
+"stepNum": 2,
+"stepDesc": "Set off",
+"timeOffset": -40
+},
+{
+"stepNum": 3,
+"stepDesc": "Arrive destination",
+"timeOffset": 0
+},
+{
+"stepNum": 4,
+"stepDesc":"Check in",
+"timeOffset": 10
+},
+{
+"stepNum": 5,
+"stepDesc":"Check out",
+"timeOffset": 1450
+}
+]
+}
+}

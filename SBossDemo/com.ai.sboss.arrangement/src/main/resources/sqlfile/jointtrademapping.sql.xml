@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLDescribe>
+	<sql name="IJointTradeMappingDAO.getJointTradeMappingSet" type="hql" exe="select">
+		from JointTradeMappingEntity u 
+		left join fetch u.joint j where j.uid = :jointuid
+	</sql>
+	
+	<sql name="IJointTradeMappingDAO.queryJointTradeByTradeid" type="hql" exe="select">
+		from JointTradeMappingEntity u 
+		left join fetch u.joint j 
+		where j.uid = :jointid AND u.tradeid = :tradeid AND u.scope = :scope
+	</sql>
+</SQLDescribe>

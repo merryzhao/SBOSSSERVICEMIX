@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	You under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ctx="http://www.springframework.org/schema/context"
+	xmlns:camel="http://camel.apache.org/schema/spring" xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://www.springframework.org/schema/osgi-compendium http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd">
+
+	<!-- query order list -->
+
+	<!-- query order list -->
+
+	<!-- response convertor -->
+
+	<!-- response convertor -->
+
+	<camel:camelContext id="camelContext" trace="false"
+		xmlns="http://camel.apache.org/schema/blueprint">
+		<!-- ============================ endpoint ======================== -->
+		<!-- 添加任务节点 -->
+		<camel:endpoint id="addJointItem"
+			uri="jetty:http://0.0.0.0:8282/sboss/addJointItem" />
+		<!-- 查询指定的 外部业务编号 所对应的流程实例基本信息。 -->
+		<camel:endpoint id="queryArrangementInstancesByBusinessid"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryArrangementInstancesByBusinessid" />
+		<!-- 添加默认流程模板 -->
+		<camel:endpoint id="addDefaultArrangementItem"
+			uri="jetty:http://0.0.0.0:8282/sboss/addDefaultArrangementItem" />
+		<!-- 添加服务商户、客户自定义的流程模板 -->
+		<camel:endpoint id="addArrangementItem"
+			uri="jetty:http://0.0.0.0:8282/sboss/addArrangementItem" />
+
+		<!-- 查询行业流程默认模板 -->
+		<camel:endpoint id="queryDefaultArrangementByTradeid"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryDefaultArrangementByTradeid" />
+		<!-- 查询流程模板信息 -->
+		<camel:endpoint id="queryArrangementByArrangementid"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryArrangementByArrangementid" />
+		<!-- 查询行业流程可选任务节点列表 -->
+		<camel:endpoint id="queryJointByTradeid"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryJointByTradeid" />
+		<!-- 按照流程实例唯一绑定的 “外部业务编号”。从而得到这个流程实例所使用的流程模板下所绑定的“任务模板” -->
+		<camel:endpoint id="queryJointByBusinessID"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryJointByBusinessid" />
+		<!-- 查询当前用户所创建的流程列表（流程实例） -->
+		<camel:endpoint id="getProcessByCustomerId"
+			uri="jetty:http://0.0.0.0:8282/sboss/getProcessByCustomerId" />
+		<!-- 查询tradeid下已建立Arrangement流程模板所关联的任务信息 的列表 -->
+		<camel:endpoint id="queryMappingJointByTradeid"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryMappingJointByTradeid" />
+
+		<!-- 删除指定的任务节点 -->
+		<camel:endpoint id="deleteJointItem"
+			uri="jetty:http://0.0.0.0:8282/sboss/deleteJointItem" />
+		<!-- 删除指定的编排系统流程 -->
+		<camel:endpoint id="deleteArrangementItem"
+			uri="jetty:http://0.0.0.0:8282/sboss/deleteArrangementItem" />
+
+		<!-- ==========实例相关========= -->
+		<!-- 查询和指定的用户相关的任务实例列表（用户是创建者或者是相关执行者），并按照创建的先后顺序返回 -->
+		<camel:endpoint id="queryJointInstanceByUserid"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryJointInstanceByUserid" />
+		<!-- 查询指定的 外部业务编号 所涉及的任务实例列表，并按照创建的先后顺序返回 -->
+		<camel:endpoint id="queryJointInstancesByBusinessid"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryJointInstancesByBusinessid" />
+		<!-- 查询指定的 外部业务编号 所对应的流程实例基本信息及其所涉及的任务实例列表，并按照创建的先后顺序返回 -->
+		<camel:endpoint id="queryArrangementInstancesByBusinessidWithSet"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryArrangementInstancesByBusinessidWithSet" />
+		<!-- 查询指定的 流程实例编号基本信息及其 所涉及的任务实例列表，并按照创建的先后顺序返回 -->
+		<camel:endpoint id="queryArrangementInstancesByidWithSet"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryArrangementInstancesByidWithSet" />
+		<!-- 查询指定的 流程实例编号 所对应的流程实例基本信息。 -->
+		<camel:endpoint id="queryArrangementInstancesByid"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryArrangementInstancesByid" />
+
+		<!-- ==========流转相关========= -->
+		<!-- 启动流程模版，创建流程实例，并返回流程实例基本信息 -->
+		<camel:endpoint id="startUpArrangementByArrangmentid"
+			uri="jetty:http://0.0.0.0:8282/sboss/startUpArrangementByArrangmentid" />
+		<!-- 正向执行指定的任务实例 -->
+		<camel:endpoint id="executeFlowByJointInstanceid"
+			uri="jetty:http://0.0.0.0:8282/sboss/executeFlowByJointInstanceid" />
+		<!-- 逆向执行指定的任务实例 -->
+		<camel:endpoint id="executeUNFlowByJointInstanceid"
+			uri="jetty:http://0.0.0.0:8282/sboss/executeUNFlowByJointInstanceid" />
+
+
+		<!-- ============================ endpoint ======================== -->
+		<!-- 查询指定的 外部业务编号 所对应的流程实例基本信息及其所涉及的任务实例列表，并按照创建的先后顺序返回 -->
+		<camel:route>
+			<camel:from ref="queryArrangementInstancesByBusinessidWithSet" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryArrangementInstancesByBusinessidWithSetProcessor"></camel:process>
+		</camel:route>
+		
+		<!-- 添加行业默认流程模板 -->
+		<camel:route>
+			<camel:from ref="addDefaultArrangementItem" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="addDefaultArrangementItemProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 添加服务商户、客户自定义的流程模板 -->
+		<camel:route>
+			<camel:from ref="addArrangementItem" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="addArrangementItemProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 添加任务模板 -->
+		<camel:route>
+			<camel:from ref="addJointItem" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="addJointItemProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 查询行业流程默认模板的camel路由 -->
+		<camel:route>
+			<camel:from ref="queryDefaultArrangementByTradeid" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryDefaultArrangementByTradeidProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 按照行业查询可用（可选）任务列表 -->
+		<camel:route>
+			<camel:from ref="queryJointByTradeid" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryJointByTradeidProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 按照行业查询可用（可选）任务列表 -->
+		<camel:route>
+			<camel:from ref="queryJointByBusinessID" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryJointByBusinessIDProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 查询tradeid下已建立Arrangement流程模板所关联的任务信息 的列表 -->
+		<camel:route>
+			<camel:from ref="queryMappingJointByTradeid" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryMappingJointByTradeidProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 查询流程模板信息 -->
+		<camel:route>
+			<camel:from ref="queryArrangementByArrangementid" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryArrangementByArrangementidProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 查询指定的 外部业务编号 所对应的流程实例基本信息 -->
+		<camel:route>
+			<camel:from ref="queryArrangementInstancesByBusinessid" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryArrangementInstancesByBusinessidProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 查询指定的 流程实例编号 所对应的流程实例基本信息 -->
+		<camel:route>
+			<camel:from ref="queryArrangementInstancesByid" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryArrangementInstancesByidProcessor"></camel:process>
+		</camel:route>
+		
+		<!-- 查询指定的 流程实例编号 所对应的流程实例基本信息及相应的任务实例（已排序好的） -->
+		<camel:route>
+			<camel:from ref="queryArrangementInstancesByidWithSet" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryArrangementInstancesByidWithSetProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 删除任务节点（慎重调用） -->
+		<camel:route>
+			<camel:from ref="deleteJointItem" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="deleteJointItemProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 删除指定的编排系统流程（慎重调用） -->
+		<camel:route>
+			<camel:from ref="deleteArrangementItem" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="deleteArrangementItemProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 查询和指定的用户相关的任务实例列表（用户是创建者或者是相关执行者），并按照创建的先后顺序返回 -->
+		<camel:route>
+			<camel:from ref="queryJointInstanceByUserid" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryJointInstanceByUseridProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 查询指定的 外部业务编号 所涉及的任务实例列表，并按照创建的先后顺序返回 -->
+		<camel:route>
+			<camel:from ref="queryJointInstancesByBusinessid" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryJointInstancesByBusinessidProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 正向执行指定的任务实例 -->
+		<camel:route>
+			<camel:from ref="executeFlowByJointInstanceid" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="executeFlowByJointInstanceProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 逆向执行指定的任务实例 -->
+		<camel:route>
+			<camel:from ref="executeUNFlowByJointInstanceid" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="executeUNFlowByJointInstanceProcessor"></camel:process>
+		</camel:route>
+
+		<!-- 启动指定的流程 -->
+		<camel:route>
+			<camel:from ref="startUpArrangementByArrangmentid" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="startUpArrangementProcessor"></camel:process>
+		</camel:route>
+
+	</camel:camelContext>
+</beans>

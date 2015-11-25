@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLDescribe>
+	<sql name="IJointInstanceDAO.queryJointInstancesByUserid" type="sql" exe="select">
+		select UUID,ABSOFFSETTIME,CAMELURI,EXECUTOR,PROMPTOFFSETTIME,RELATEOFFSETTIME,ARRANGEMENTINST,JOINT,CREATOR,
+		EXPANDTYPEID,OFFSETTITLE,OFFSETVISIBLE,EXPECTEDEXETIME from I_JOINTINSTANCE where I_JOINTINSTANCE.EXECUTOR = :userid
+		union
+		select UUID,ABSOFFSETTIME,CAMELURI,EXECUTOR,PROMPTOFFSETTIME,RELATEOFFSETTIME,ARRANGEMENTINST,JOINT,CREATOR,
+		EXPANDTYPEID,OFFSETTITLE,OFFSETVISIBLE,EXPECTEDEXETIME from I_JOINTINSTANCE where I_JOINTINSTANCE.CREATOR = :userid
+		order by EXPECTEDEXETIME 
+	</sql>
+	
+	<sql name="IJointInstanceDAO.queryJointInstancesByBusinessid" type="hql" exe="select">
+		from JointInstanceEntity u
+		left join fetch u.arrangementInstance a
+		where a.businessID = :businessid
+		order by u.expectedExeTime
+	</sql>
+	
+	<sql name="IJointInstanceDAO.queryJointInstancesByID" type="hql" exe="select">
+		from JointInstanceEntity u
+		left join fetch u.arrangementInstance a
+		left join fetch u.joint j
+		where u.uid = :jointInstanceid
+	</sql>
+	
+	<sql name="IJointInstanceDAO.queryJointInstanceEntityByInstanceID" type="hql" exe="select">
+		from JointInstanceEntity u
+		left join fetch u.arrangementInstance a
+		where a.uid = :arrangementInstanceuid
+		<isnull param="jointStatu">
+		AND u.statu = :jointStatu 
+		</isnull>
+		order by u.expectedExeTime
+	</sql>
+	
+	<sql name="IJointInstanceDAO.updateJointInstanceStatu" type="sql" exe="update">
+		UPDATE I_JOINTINSTANCE SET STATE=:statu WHERE UUID = :jointInstanceId
+	</sql>
+	
+	<sql name="IJointInstanceDAO.updateCompletedJointInstanceStatuByArrangementInstanceId" type="sql" exe="update">
+		UPDATE I_JOINTINSTANCE SET STATE='completed' WHERE ARRANGEMENTINST = :arrangementInstanceId
+	</sql>
+	
+	<sql name="IJointInstanceDAO.updateFollowedJointInstanceStatuByJointInstanceId" type="sql" exe="update">
+		UPDATE I_JOINTINSTANCE SET EXETIME=:exeTime , EXECUTOR=:executor , STATE='followed' WHERE UUID = :jointInstanceuid
+	</sql>
+</SQLDescribe>

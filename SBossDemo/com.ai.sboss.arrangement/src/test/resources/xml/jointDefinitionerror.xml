@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 此文档记录了编排系统，定义一个任务的格式 -->
+<!-- 
+一个节点代表整个业务流程的某一个点。
+这些点都是在我们系统中预制好的，对应了UPC开发的某个服务（？真相是不是这样呢），对应了activiti中已经定制好的某一个subprocessor。
+
+displayName：任务中文名
+id：这个joint在编排系统中的唯一编号。
+upcService：对应的upc服务的信息（但不知道最重是不是需要）
+subProcessor：这个任务节点对应的activiti子节点的标示
+executor：任务默认执行者
+-->
+<joint id="XXXX" displayName="任务中文名" upcService="AAAAAA" subProcessor="activitiProcessor" executor="ERETTE">
+	<!-- 可以使用这个服务的行业描述，这个trades元素必须存在，且其中至少有一个trade元素 -->
+	<trades>
+		<!--
+		一个行业
+		id：可以使用这个trade的行业编号
+		scope：可以使用这个业务服务的范围：
+			industry：只能作为某个行业的默认服务，不能被服务者或者消费者的自定义流程引用
+			producer：可以作为行业的默认服务或者服务者的自定义流程，但是不能被消费者的自定义流程引用
+			consumer：可以作为行业的默认服务、服务者或者消费用的自定义流程
+		-->
+		<trade id="1234354" scope="consumer"></trade>
+	</trades>
+	
+	<!--
+	默认的任务偏移量。任务偏移量是指从流程原点开始，到当前这个任务开始执行，还有多长的时间偏移（单位毫秒）
+	中间的文本信息是任务提醒
+	abs相对于整个实际时间线原点的偏移
+	relate相对于当前任务时间原点的偏移
+	-->
+	<offsettime abs="8000" relate="7000"><![CDATA[任务提醒信息]]></offsettime>
+	
+	<!-- 入参，输入参数信息 -->
+	<inputs>
+		<!-- 
+		一个参数信息
+		name：参数名称
+		type：参数信息，目前支持的参数类型包括String，Boolean，Integer，Long，Float，Double，JSON，XML，Date
+		displayName：参数的中文信息，可以有这个属性的设置，也可以没有这个属性的设置
+		required：是否是必须的入参，默认是true
+		default：默认值，当required=true，但是有没有传入时，default就会起作用
+		-->
+		<param name="K" type="String" displayName="中文1" dispalyType="typename1" required="true" default=""></param>
+		<param name="K" type="Boolean" displayName="中文2" dispalyType="typename2" required="false" ></param>
+		<param name="K" type="Integer" displayName="中文3" dispalyType="typename3" required="true" default=""></param>
+		<param name="K" type="Long" displayName="中文4" dispalyType="typename4" required="true" ></param>
+		<param name="K" type="Float" displayName="中文5" dispalyType="typename5" required="false" default=""></param>
+		<param name="K" type="Double" displayName="中文6" dispalyType="typename6"  default=""></param>
+		<param name="K" type="JSON" displayName="中文7" dispalyType="typename7" required="true" ></param>
+	</inputs>
+	
+	<!-- 出参，输出参数信息 -->
+	<outputs>
+		<!-- 
+		name：参数名称
+		type：参数信息，目前支持的参数类型包括String，Boolean，Integer，Long，Float，Double，JSON，XML，Date
+		required：是否是必须的出参，默认是true
+		default：默认值，当required=true，但是有没有传入时，default就会起作用
+		-->
+		<param name="param1" type="String" required="TRUE" ></param>
+		<param name="param2" type="Float" required="True" default="1.0"></param>
+		<param name="param3" type="String" required="true" default="2367978"></param>
+		<param name="param4" type="Date" required="fAlse" ></param>
+	</outputs>
+</joint>

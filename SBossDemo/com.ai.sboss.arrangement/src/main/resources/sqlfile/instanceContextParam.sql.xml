@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLDescribe>
+	<sql name="IInstanceContextParamDAO.queryContextParamByArrangementInstanceId" type="hql" exe="select">
+		from InstanceContextParamEntity c where c.arrangementInstance.uid = :arrangementInstanceId
+	</sql>
+	
+	<sql name="IInstanceContextParamDAO.updateNewestContextParamValue" type="sql" exe="update">
+		update I_INSTANCECONTEXTPARAM SET nowValue=:nowValue WHERE UUID = :uid
+	</sql>
+</SQLDescribe>

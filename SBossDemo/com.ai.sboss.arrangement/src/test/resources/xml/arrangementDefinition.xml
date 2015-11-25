@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 此文档记录了编排系统，定义一个流程格式 
+
+一个编排系统的表现层流程，可以包括joint也可以包括另外一个arrangement。
+例如一个消费者的arrangement，大部分情况是对多个arrangement的集成和连接。但是也不排除加入joint信息；
+
+而一个消费者的arrangement，大部分情况是对多个joint的集成，但是也不排除加入joint
+id：全系统唯一的编排号，
+creator：流程模板的创建者
+creatorScope：创建者范围，使用industry、producer、consumer，标明创建者的身份
+displayName：展现流程的中文名称
+-->
+<arrangement id="XXXXXXXX" creator="XXXX" creatorScope="industry" displayName="展现流程的中文名称">
+	<!--
+	一个流程，只可能是某一个行业的，有固定的创建者，创建者有固定的身份。
+	id：可以使用这个trade的行业编号
+	scope：可以使用这个业务服务的范围：
+		industry：只能作为某个行业的默认服务，不能被服务者或者消费者的自定义流程引用
+		producer：可以作为行业的默认服务或者服务者的自定义流程，但是不能被消费者的自定义流程引用
+		consumer：可以作为行业的默认服务、服务者或者消费用的自定义流程
+	-->
+	<trade id="1234354" scope="industry"></trade>
+	
+	<!-- 
+	一个节点代表整个业务流程的某一个点。
+	这些点都是在我们系统中预制好的，对应了UPC开发的某个服务（？真相是不是这样呢），对应了activiti中已经定制好的某一个subprocessor。
+	-->
+	<joints>
+		<!-- 
+		id：这个joint在编排系统中的唯一编号。
+		visible：表示这个流程是否需要在界面上显示
+		offsettime：预计业务所耗费的时间，这个时间将被显示在列表上。如果没有设置，将采用这个joint所设置的默认时间
+		-->
+		<joint id="XXXXXX" visible="true" absOffsettime="100000" relateOffsettime="2000" weight="2"></joint>
+		<joint id="XXXXXX1" visible="false" weight="4"></joint>
+		<!-- joint id="XXXXXX2" visible="false"></joint -->
+	</joints>
+	
+	<!-- 
+	包含的其他流程定义
+	id：这个子流程它自己的全系统唯一编号
+	visible：表示这个流程是否需要在界面上显示。注意arrangement不会有offsettime，因为它的offsettime在它所属的joint中提现
+	
+	<arrangements>
+		<arrangement id="XXXXXX" visible="true"></arrangement>
+		<arrangement id="XXXXXX1" visible="true"></arrangement>
+		<arrangement id="XXXXXX2" visible="true"></arrangement>
+	</arrangements>
+	-->
+	
+	<!-- 
+	最重要的流程定义
+	第一版的实现计划是，开始、流转、？条件、结束
+	
+	注意，flows中所有元素的id，都不需要全系统唯一，只需要这个arrangement中唯一，即可
+	-->
+	<flows>
+		<begin id="begin"/>
+		<!--
+		流程线连接起来的两个点：
+			source：开始节点
+			target：目标节点
+		-->
+		<process source="flow:begin" target="joint:XXXXXX" />
+		<process source="joint:XXXXXX" target="arrangement:XXXXXX"/>
+		<process source="arrangement:XXXXXX" target="flow:AAAAA"/>
+		<!--
+		条件表达式现在还没有确定，计划使用DSL语言，JSONPATH或者XPATH都太局限了。
+		-->
+		<condition id="AAAAA">
+			<choice value="${var = '12345'}" target="flow:end" default="true"/>
+			<choice value="${var = 'abcdef'}" target="flow:end"/>
+			<otherwise target="arrangement:XXXXXX"></otherwise>
+		</condition>
+		<end id="end"/>
+	</flows>
+</arrangement>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:camel="http://camel.apache.org/schema/blueprint" xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
+	xmlns:jaxws="http://cxf.apache.org/blueprint/jaxws"
+	xsi:schemaLocation="
+       http://www.osgi.org/xmlns/blueprint/v1.0.0 
+       http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+       http://camel.apache.org/schema/blueprint 
+       http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+  <!-- processor definitions -->
+  <!-- In -->
+  <bean id="queryServiceParametersInProcessor" class="com.ai.sboss.offeringshelves.processor.QueryServiceParametersInProcessor" />
+  <bean id="generalJettyInProcessor" class="com.ai.sboss.offeringshelves.processor.GeneralJettyInProcessor" />
+  <bean id="saveOfferingToCatalogInProcessor" class="com.ai.sboss.offeringshelves.processor.SaveOfferingToCatalogInProcessor" />
+  <bean id="queryIndustryListFakeProcessor" class="com.ai.sboss.offeringshelves.fake.QueryIndustryListFakeProcessor" />
+  <bean id="queryCatalogRelOfferingInProcessor" class="com.ai.sboss.offeringshelves.processor.QueryCatalogRelOfferingInProcessor" />
+  
+  <!-- fake in for queryserviceparameters -->
+  <bean id="queryServiceParametersFakeInProcessor" class="com.ai.sboss.offeringshelves.processor.QueryServiceParametersFakeInProcessor" />
+  <!-- end fake in -->
+  <bean id="queryHotSearchFakeProcessor" class="com.ai.sboss.offeringshelves.fake.QueryHotSearchFakeProcessor" />
+  
+  <!-- pzy In processor -->
+  <bean id="saveOfferingInfoInProcessor" class="com.ai.sboss.offeringshelves.processor.SaveOfferingInfoInProcessor" />
+  <bean id="saveProductInfoInProcessor" class="com.ai.sboss.offeringshelves.processor.SaveProductInfoInProcessor" />
+  <!-- bean id="queryIndustryCatalogFakeProcessor" class="com.ai.sboss.offeringshelves.fake.QueryIndustryCatalogFakeProcessor" /-->
+  <bean id="queryIndustryCatalogFakeInProcessor" class="com.ai.sboss.offeringshelves.processor.QueryIndustryCatalogFakeInProcessor" />
+  <bean id="serviceLaunchInProcessor" class="com.ai.sboss.offeringshelves.processor.ServiceLaunchInProcessor" />
+ 
+  <!-- Out -->
+  <bean id="queryServiceParametersOutProcessor" class="com.ai.sboss.offeringshelves.respconvertor.QueryServiceParametersOutProcessor" />
+  <bean id="saveOfferingToCatalogOutProcessor" class="com.ai.sboss.offeringshelves.respconvertor.SaveOfferingToCatalogOutProcessor" />
+  <bean id="queryCatalogRelOfferingOutProcessor" class="com.ai.sboss.offeringshelves.respconvertor.QueryCatalogRelOfferingOutProcessor" />
+  
+  <bean id="queryIndustryCatalogFakeOutProcessor" class="com.ai.sboss.offeringshelves.respconvertor.QueryIndustryCatalogFakeOutProcessor" />
+  
+  <!-- fake out for queryserviceparameters -->
+  <bean id="queryServiceParametersFakeOutProcessor" class="com.ai.sboss.offeringshelves.respconvertor.QueryServiceParametersFakeOutProcessor" />
+  <!-- end fake out -->  
+  
+  <!-- pzy out processor -->
+  <bean id="saveOfferingInfoOutProcessor" class="com.ai.sboss.offeringshelves.respconvertor.SaveOfferingInfoOutProcessor" />
+  <bean id="saveProductInfoOutProcessor" class="com.ai.sboss.offeringshelves.respconvertor.SaveProductInfoOutProcessor" />
+  <bean id="serviceLaunchOutProcessor" class="com.ai.sboss.offeringshelves.respconvertor.ServiceLaunchOutProcessor" />
+
+  <camelContext id="offeringshelves" trace="true" xmlns="http://camel.apache.org/schema/blueprint">
+  
+    <!--camel:route id="queryServiceParameters">
+	  <camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryServiceParameters" />
+	  <camel:process ref="generalJettyInProcessor" />
+	  <camel:process ref="queryServiceParametersInProcessor" />
+	  <camel:process ref="queryServiceParametersOutProcessor" />
+	</camel:route-->
+	
+	<!-- revised for queryserviceparameters -->
+	<camel:route id="queryServiceParameters">
+	  <camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryServiceParameters" />
+	  <camel:process ref="generalJettyInProcessor" />
+	  <camel:process ref="queryServiceParametersFakeInProcessor" />
+	  <camel:process ref="queryServiceParametersFakeOutProcessor" />
+	</camel:route>
+	<!-- end revised -->
+	
+    <camel:route id="saveOfferingToCatalog">
+	  <camel:from uri="jetty:http://0.0.0.0:8282/sboss/saveOfferingToCatalog" />
+	  <camel:process ref="generalJettyInProcessor" />
+	  <camel:process ref="saveOfferingToCatalogInProcessor" />
+	  <camel:process ref="saveOfferingToCatalogOutProcessor" />
+	</camel:route>
+
+	<camel:route id="queryIndustryListFake">
+	  <camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryIndustryList" />
+	  <camel:process ref="queryIndustryListFakeProcessor" />
+	</camel:route>
+	
+    <camel:route id="queryCatalogRelOffering">
+	  <camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryCatalogRelOffering" />
+	  <camel:process ref="generalJettyInProcessor" />
+	  <camel:process ref="queryCatalogRelOfferingInProcessor" />
+	  <camel:process ref="queryCatalogRelOfferingOutProcessor" />
+	</camel:route>
+     
+    <!-- pzy add camel route -->
+    <camel:route id="saveOfferingInfo">
+	  <camel:from uri="jetty:http://0.0.0.0:8282/sboss/saveOfferingInfo" />
+	  <camel:process ref="generalJettyInProcessor" />
+	  <camel:process ref="saveOfferingInfoInProcessor" />
+	  <camel:process ref="saveOfferingInfoOutProcessor" />
+	</camel:route>
+	
+	<!--camel:route id="queryIndustryCatalog">
+	  <camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryIndustryCatalog" />
+	  <camel:process ref="generalJettyInProcessor" />
+	  <camel:process ref="queryIndustryCatalogFakeProcessor" />  
+	</camel:route-->
+	
+	<camel:route id="saveProductInfo">
+	  <camel:from uri="jetty:http://0.0.0.0:8282/sboss/saveProductInfo" />
+	  <camel:process ref="generalJettyInProcessor" />
+	  <camel:process ref="saveProductInfoInProcessor" />  
+	  <camel:process ref="saveProductInfoOutProcessor" />  
+	</camel:route>
+	
+	<camel:route id="queryHotSearchFake">
+	  <camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryHotSearch" />
+	  <camel:process ref="queryHotSearchFakeProcessor" />
+	</camel:route>
+	
+	<!-- revised for queryIndustryCatalog -->
+	<camel:route id="queryIndustryCatalog">
+	  <camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryIndustryCatalog" />
+	  <camel:process ref="generalJettyInProcessor" />
+	  <camel:process ref="queryIndustryCatalogFakeInProcessor" />
+	  <camel:process ref="queryIndustryCatalogFakeOutProcessor" />
+	</camel:route>
+	<!-- end revised -->
+	
+	<camel:route id="serviceLaunch">
+	  <camel:from uri="jetty:http://0.0.0.0:8282/sboss/serviceLaunch" />
+	  <camel:process ref="generalJettyInProcessor" />
+	  <camel:process ref="serviceLaunchInProcessor" />
+	  <camel:process ref="serviceLaunchOutProcessor" />
+	</camel:route>    
+     
+  </camelContext>
+
+</blueprint>

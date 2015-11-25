@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:camel="http://camel.apache.org/schema/blueprint" xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
+	xmlns:jaxws="http://cxf.apache.org/blueprint/jaxws"
+	xsi:schemaLocation="
+       http://www.osgi.org/xmlns/blueprint/v1.0.0 
+       http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+       http://camel.apache.org/schema/blueprint 
+       http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+	<!-- processor definitions -->
+	<bean id="queryCollectedServicesFakeProcessor" class="com.ai.sboss.favorite.fake.QueryCollectedServicesFakeProcessor" />
+	<bean id="modifyServiceTagsFakeProcessor" class="com.ai.sboss.favorite.fake.ModifyServiceTagsFakeProcessor" />
+	<bean id="queryCollectedContentsFakeProcessor" class="com.ai.sboss.favorite.fake.QueryCollectedContentsFakeProcessor" />
+	<bean id="delContentFromFavoriteFakeProcessor" class="com.ai.sboss.favorite.fake.DelContentFromFavoriteFakeProcessor" />
+	<bean id="queryContentTagsFakeProcessor" class="com.ai.sboss.favorite.fake.QueryContentTagsFakeProcessor" />
+	<bean id="queryFavoriteOriginsFakeProcessor" class="com.ai.sboss.favorite.fake.QueryFavoriteOriginsFakeProcessor" />
+	<bean id="queryServicesByContentFakeProcessor" class="com.ai.sboss.favorite.fake.QueryServicesByContentFakeProcessor" />
+	<bean id="modifyContentTagsFakeProcessor" class="com.ai.sboss.favorite.fake.ModifyContentTagsFakeProcessor" />
+	<bean id="modifyFavoriteFlagFakeProcessor" class="com.ai.sboss.favorite.fake.ModifyFavoriteFlagFakeProcessor" />
+	<bean id="addServiceToFavoriteFakeProcessor" class="com.ai.sboss.favorite.fake.AddServiceToFavoriteFakeProcessor" />
+	<bean id="delServiceFromFavoriteFakeProcessor" class="com.ai.sboss.favorite.fake.DelServiceFromFavoriteFakeProcessor" />
+	<bean id="queryServiceTagsFakeProcessor" class="com.ai.sboss.favorite.fake.QueryServiceTagsFakeProcessor" />
+
+
+	<bean id="generalJettyInProcessor" class="com.ai.sboss.favorite.processor.GeneralJettyInProcessor" />
+	<bean id="splitProductOfferingIdListProcessor" class="com.ai.sboss.favorite.processor.SplitProductOfferingIdListProcessor" />
+	<bean id="keepDataProcessor" class="com.ai.sboss.favorite.processor.KeepDataProcessor" />
+
+	<!-- In -->
+	<bean id="addServiceToFavoriteInProcessor" class="com.ai.sboss.favorite.processor.AddServiceToFavoriteInProcessor" />
+	<bean id="queryCollectedServicesInProcessor" class="com.ai.sboss.favorite.processor.QueryCollectedServicesInProcessor" />
+	<bean id="queryProductOfferingDetailInProcessor" class="com.ai.sboss.favorite.processor.QueryProductOfferingDetailInProcessor" />
+	<bean id="modifyServiceTagsInProcessor" class="com.ai.sboss.favorite.processor.ModifyServiceTagsInProcessor" />
+	<bean id="generateContentIdInProcessor" class="com.ai.sboss.favorite.processor.GenerateContentIdInProcessor" />
+	<bean id="fileProcessInProcessor" class="com.ai.sboss.favorite.processor.FileProcessInProcessor" />
+	<bean id="queryContentTagsInProcessor" class="com.ai.sboss.favorite.processor.QueryContentTagsInProcessor" />
+	<bean id="queryFavoriteOriginsInProcessor" class="com.ai.sboss.favorite.processor.QueryFavoriteOriginsInProcessor" />
+	<bean id="modifyFavoriteFlagInProcessor" class="com.ai.sboss.favorite.processor.ModifyFavoriteFlagInProcessor" />
+	<bean id="modifyContentTagsInProcessor" class="com.ai.sboss.favorite.processor.ModifyContentTagsInProcessor" />
+	<bean id="delServiceFromFavoriteInProcessor" class="com.ai.sboss.favorite.processor.DelServiceFromFavoriteInProcessor" />
+	<bean id="delContentFromFavoriteInProcessor" class="com.ai.sboss.favorite.processor.DelContentFromFavoriteInProcessor" />
+	<bean id="modifyContentByIdInProcessor" class="com.ai.sboss.favorite.processor.ModifyContentByIdInProcessor" />
+	<bean id="queryOperationInterfaceInProcess" class="com.ai.sboss.favorite.processor.QueryOperationInterfaceInProcess" />
+	<bean id="getAnalysisServicesListInProcessor" class="com.ai.sboss.favorite.processor.GetAnalysisServicesListInProcessor" />
+	<bean id="queryCollectedContentsInProcessor" class="com.ai.sboss.favorite.processor.QueryCollectedContentsInProcessor" />
+	<bean id="modifyFavoriteColorsInProcessor" class="com.ai.sboss.favorite.processor.ModifyFavoriteColorsInProcessor" />
+	<bean id="queryContentByIdInProcessor" class="com.ai.sboss.favorite.processor.QueryContentByIdInProcessor" />
+	<!-- monica add -->
+	<bean id="queryServiceTagsInProcessor" class="com.ai.sboss.favorite.processor.QueryServiceTagsInProcessor" />
+	<bean id="queryServicesByContentInProcessor" class="com.ai.sboss.favorite.processor.QueryServicesByContentInProcessor" />
+	<!-- monica add for findAnalyseResult -->
+	<bean id="getContentIdsInProcessor" class="com.ai.sboss.favorite.processor.GetContentIdsInProcessor" />
+	<bean id="getContentLoopIdProcessor" class="com.ai.sboss.favorite.processor.GetContentLoopIdProcessor" />
+ 
+	<!-- Out -->
+	<bean id="addServiceToFavoriteOutProcessor" class="com.ai.sboss.favorite.respconvertor.AddServiceToFavoriteOutProcessor" />
+	<bean id="queryCollectedServicesOutProcessor" class="com.ai.sboss.favorite.respconvertor.QueryCollectedServicesOutProcessor" />
+	<bean id="queryProductOfferingDetailOutProcessor" class="com.ai.sboss.favorite.respconvertor.QueryProductOfferingDetailOutProcessor" />
+	<bean id="modifyServiceTagsOutProcessor" class="com.ai.sboss.favorite.respconvertor.ModifyServiceTagsOutProcessor" />
+	<bean id="generateContentIdOutProcessor" class="com.ai.sboss.favorite.respconvertor.GenerateContentIdOutProcessor" />
+	<bean id="contentTagsConvertOutProcessor" class="com.ai.sboss.favorite.respconvertor.ContentTagsConvertOutProcessor" />
+	<bean id="favoriteOriginsConvertOutProcessor" class="com.ai.sboss.favorite.respconvertor.FavoriteOriginsConvertOutProcessor" />
+	<bean id="modifyFavoriteFlagOutProcessor" class="com.ai.sboss.favorite.respconvertor.ModifyFavoriteFlagConvertOutProcessor" />
+	<bean id="modifyContentTagsOutProcessor" class="com.ai.sboss.favorite.respconvertor.ModifyContentTagsConvertOutProcessor" />
+	<bean id="delServiceFromFavoriteOutProcessor" class="com.ai.sboss.favorite.respconvertor.DelServiceFromFavoriteConvertOutProcessor" />
+	<bean id="delContentFromFavoriteOutProcessor" class="com.ai.sboss.favorite.respconvertor.DelContentFromFavoriteConvertOutProcessor" />
+	<bean id="getAnalysisServicesListOutProcessor" class="com.ai.sboss.favorite.respconvertor.GetAnalysisServicesListOutProcessor" />
+	<bean id="addContentToFavoriteOutProcessor" class="com.ai.sboss.favorite.respconvertor.AddContentToFavoriteOutProcessor" />
+	<bean id="queryCollectedContentsOutProcessor" class="com.ai.sboss.favorite.respconvertor.QueryCollectedContentsOutProcessor" />
+	<bean id="modifyFavoriteColorsOutProcessor" class="com.ai.sboss.favorite.respconvertor.ModifyFavoriteColorsOutProcessor" />
+	<bean id="modifyContentByIdOutProcessor" class="com.ai.sboss.favorite.respconvertor.ModifyContentByIdOutProcessor" />
+	<bean id="getContentDescriptionOutProcessor" class="com.ai.sboss.favorite.respconvertor.GetContentDescriptionOutProcessor" />
+	<!-- monica add -->
+	<bean id="serviceTagsConvertOutProcessor" class="com.ai.sboss.favorite.respconvertor.ServiceTagsConvertOutProcessor" />
+	<bean id="queryServicesByContentOutProcessor" class="com.ai.sboss.favorite.respconvertor.QueryServicesByContentOutProcessor" />
+	<!-- monica add for findAnalyseResult-->
+	<bean id="querySingleContentOutProcessor" class="com.ai.sboss.favorite.respconvertor.QuerySingleContentOutProcessor" />
+	<bean id="findAnalyseResultOutProcessor" class="com.ai.sboss.favorite.respconvertor.FindAnalyseResultOutProcessor"/>
+	<bean id="getFinalAnalyseResultOutProcessor" class="com.ai.sboss.favorite.respconvertor.GetFinalAnalyseResultOutProcessor" />
+
+	<!-- Aggregations -->
+	<bean id="queryCollectedServicesAggregation" class="com.ai.sboss.favorite.aggregator.QueryCollectedServicesAggregation" />
+	<bean id="favoriteServicesInfoAggregation" class="com.ai.sboss.favorite.aggregator.FavoriteServicesInfoAggregation" />
+	<bean id="addContentToFavoriteAggregation" class="com.ai.sboss.favorite.aggregator.AddContentToFavoriteAggregation" />
+	<!-- monica add for findAnalyseResult -->
+	<bean id="contentsInfoAggregation" class="com.ai.sboss.favorite.aggregator.ContentsInfoAggregation" />
+
+	<camelContext id="favoritecontext" trace="false" xmlns="http://camel.apache.org/schema/blueprint">
+		<camel:endpoint id="crmEndpoint" uri="jetty:http://10.5.1.247:5095/HubCrmServlet?bridgeEndpoint=true" />
+
+		<!-- frontend interfaces definition start -->
+		<!-- queryCollectedServices *True|Fake* -->
+		<camel:route id="queryCollectedServices" trace="true">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryCollectedServices" />
+			<!-- <camel:to uri="direct:queryCollectedServicesFake" /> -->
+
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryCollectedServicesCRM" />
+			<camel:process ref="splitProductOfferingIdListProcessor" />
+			<camel:split strategyRef="favoriteServicesInfoAggregation">
+				<camel:tokenize token=";" />
+				<camel:to uri="direct:loopQueryProductDetail" />
+			</camel:split>
+			<camel:process ref="queryCollectedServicesOutProcessor" />
+		</camel:route>
+
+		<!-- modifyServiceTags *Fake* -->
+		<camel:route id="modifyServiceTags">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/modifyServiceTags" />
+			<!-- <camel:to uri="direct:modifyServiceTagsFake" /> -->
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:modifyServiceTagsCRM" />
+			<camel:process ref="modifyServiceTagsOutProcessor" />
+		</camel:route>
+
+		<!-- queryCollectedContents *Fake* -->
+		<camel:route id="queryCollectedContents">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryCollectedContents" />
+			<!-- <camel:to uri="direct:queryCollectedContentsFake" /> -->
+
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryCollectedContents" />
+			<camel:process ref="queryCollectedContentsOutProcessor" />
+		</camel:route>
+
+		<!-- addContentToFavorite *True* -->
+
+		<camel:route id="addContentToFavorite">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/addContentToFavorite" />
+			<camel:to uri="direct:addContentToFavorite" />
+		</camel:route>
+
+		<!-- queryCollectedContents *True* -->
+		<camel:route id="delContentFromFavorite">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/delContentFromFavorite" />
+			<!-- <camel:to uri="direct:delContentFromFavoriteFake" /> -->
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:delContentFromFavorite" />
+			<camel:process ref="delContentFromFavoriteOutProcessor" />
+		</camel:route>
+		
+		<!-- modifyFavoriteColors *True* -->
+		<camel:route id="modifyFavoriteColors">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/modifyFavoriteColors" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:modifyFavoriteColors" />
+			<camel:process ref="modifyFavoriteColorsOutProcessor" />
+		</camel:route>
+
+		<!-- queryContentTags *True* -->
+		<camel:route id="queryContentTags">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryContentTags" />
+			<!-- <camel:to uri="direct:queryContentTagsFake" /> -->
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryContentTags" />
+			<camel:process ref="contentTagsConvertOutProcessor" />
+		</camel:route>
+
+
+
+		<!-- end queryServiceTags -->
+		<!-- queryContentTags *True* -->
+		<camel:route id="queryFavoriteOrigins">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryFavoriteOrigins" />
+			<!-- <camel:to uri="direct:queryFavoriteOriginsFake" /> -->
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryFavoriteOrigins" />
+			<camel:process ref="favoriteOriginsConvertOutProcessor" />
+		</camel:route>
+
+		<!-- queryServicesByContent *True* -->
+		<camel:route id="queryServicesByContent">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryServicesByContent" />
+			<!-- <camel:to uri="direct:queryServicesByContentFake" /> -->
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryServicesByContent" />
+		</camel:route>
+
+		<!-- modifyContentTags *True* -->
+		<camel:route id="modifyContentTags">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/modifyContentTags" />
+			<!-- <camel:to uri="direct:modifyContentTagsFake" /> -->
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:modifyContentTags" />
+			<camel:process ref="modifyContentTagsOutProcessor" />
+		</camel:route>
+		
+		<!-- modifyContentTags *True* -->
+		<camel:route id="getContentDescription">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/getContentDescription" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryContentById" />
+			<camel:process ref="getContentDescriptionOutProcessor" />
+		</camel:route>
+
+		<!-- modifyFavoriteFlag *True* -->
+		<camel:route id="modifyFavoriteFlag">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/modifyFavoriteFlag" />
+			<!-- <camel:to uri="direct:modifyFavoriteFlagFake" /> -->
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:modifyFavoriteFlag" />
+			<camel:process ref="modifyFavoriteFlagOutProcessor" />
+		</camel:route>
+
+		<!-- addServiceToFavorite *True* -->
+		<camel:route id="addServiceToFavorite">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/addServiceToFavorite" />
+			<!-- <camel:to uri="direct:addServiceToFavoriteFake" /> -->
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:addServiceToFavorite" />
+			<camel:process ref="addServiceToFavoriteOutProcessor" />
+		</camel:route>
+
+		<!-- delServiceFromFavorite *True* -->
+		<camel:route id="delServiceFromFavorite">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/delServiceFromFavorite" />
+			<!-- <camel:to uri="direct:delServiceFromFavoriteFake" /> -->
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:delServiceFromFavorite" />
+			<camel:process ref="delServiceFromFavoriteOutProcessor" />
+		</camel:route>
+
+		<!-- queryServiceTags *True* -->
+		<camel:route id="queryServiceTags">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryServiceTags" />
+			<!-- <camel:to uri="direct:queryServiceTagsFake" /> -->
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryServiceTags" />
+			<camel:process ref="serviceTagsConvertOutProcessor" />
+		</camel:route>
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="modifyFavoriteFlagCrm">
+			<camel:from uri="direct:modifyFavoriteFlag" />
+			<camel:process ref="modifyFavoriteFlagInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end modifyFavoriteFlag -->
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="modifyContentTagsCrm">
+			<camel:from uri="direct:modifyContentTags" />
+			<camel:process ref="modifyContentTagsInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end modifyContentTags -->
+		
+		
+		<camel:route id="queryContentByIdCrm">
+			<camel:from uri="direct:queryContentById" />
+			<camel:process ref="queryContentByIdInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="delServiceFromFavoriteCrm">
+			<camel:from uri="direct:delServiceFromFavorite" />
+			<camel:process ref="delServiceFromFavoriteInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end delServiceFromFavorite -->
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="queryCollectedContentsCrm">
+			<camel:from uri="direct:queryCollectedContents" />
+			<camel:process ref="queryCollectedContentsInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end queryCollectedContents -->
+
+		<camel:route id="modifyFavoriteColorsCrm">
+			<camel:from uri="direct:modifyFavoriteColors" />
+			<camel:process ref="modifyFavoriteColorsInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+
+		<!-- Jerry Zhao modifyServiceTags START -->
+		<camel:route id="modifyServiceTagsCRM">
+			<camel:from uri="direct:modifyServiceTagsCRM" />
+			<camel:process ref="modifyServiceTagsInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- Jerry Zhao modifyServiceTags END -->
+
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="queryContentTagsCRM">
+			<camel:from uri="direct:queryContentTags" />
+			<camel:process ref="queryContentTagsInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end queryContentTags -->
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="queryFavoriteOriginsCRM">
+			<camel:from uri="direct:queryFavoriteOrigins" />
+			<camel:process ref="queryFavoriteOriginsInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end queryFavoriteOrigins -->
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="delContentFromFavoriteCrm">
+			<camel:from uri="direct:delContentFromFavorite" />
+			<camel:process ref="delContentFromFavoriteInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end delContentFromFavorite -->
+
+
+
+		<!-- delServiceFromFavorite *Fake* -->
+		<!-- <camel:route id="queryServiceTags"> <camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryServiceTags" /> <camel:to 
+			uri="direct:queryServiceTagsFake" /> </camel:route> -->
+
+
+		<!-- frontend interfaces definition end -->
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="addServiceToFavoriteCRM">
+			<camel:from uri="direct:addServiceToFavorite" />
+			<camel:process ref="addServiceToFavoriteInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+		<!-- monica queryServiceTags true -->
+		<camel:route id="queryServiceTagsCRM">
+			<camel:from uri="direct:queryServiceTags" />
+			<camel:process ref="queryServiceTagsInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+		<!-- monica queryServicesByContent true -->
+		<camel:route id="queryServicesByContentCRM">
+			<camel:from uri="direct:queryServicesByContent" />
+			<camel:process ref="queryServicesByContentInProcessor" />
+			<camel:process ref="queryServicesByContentOutProcessor" />
+		</camel:route>
+
+		<camel:route id="queryCollectedServicesCRM">
+			<camel:from uri="direct:queryCollectedServicesCRM" />
+			<camel:process ref="queryCollectedServicesInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+		<camel:route id="addContentToFavoriteCrm">
+			<camel:from uri="direct:addContentToFavorite" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:generateContentIdCrm" />
+			<camel:process ref="generateContentIdOutProcessor" />
+			<camel:to uri="direct:fileProcess" />
+			<camel:multicast strategyRef="addContentToFavoriteAggregation" parallelProcessing="true">
+				<camel:process ref="keepDataProcessor" />
+				<!-- update data into crm database -->
+				<camel:to uri="direct:modifyContentById" />
+				<!-- query Servicelist -->
+				<camel:to uri="direct:queryServicesByContent" />
+			</camel:multicast>
+			<camel:process ref="addContentToFavoriteOutProcessor" />
+		</camel:route>
+
+		<camel:route id="generateContentIdCrm">
+			<camel:from uri="direct:generateContentIdCrm" />
+			<camel:process ref="generateContentIdInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+		<camel:route id="fileProcess">
+			<camel:from uri="direct:fileProcess" />
+			<camel:process ref="fileProcessInProcessor" />
+		</camel:route>
+		<camel:route id="modifyContentByIdCrm">
+			<camel:from uri="direct:modifyContentById" />
+			<camel:process ref="modifyContentByIdInProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="modifyContentByIdOutProcessor" />
+		</camel:route>
+		<!-- backend interfaces definition end -->
+
+		<!-- fake interfaces definition start -->
+		<camel:route id="queryCollectedServicesFake">
+			<camel:from uri="direct:queryCollectedServicesFake" />
+			<camel:process ref="queryCollectedServicesFakeProcessor" />
+		</camel:route>
+		<camel:route id="modifyServiceTagsFake">
+			<camel:from uri="direct:modifyServiceTagsFake" />
+			<camel:process ref="modifyServiceTagsFakeProcessor" />
+		</camel:route>
+		<camel:route id="queryCollectedContentsFake">
+			<camel:from uri="direct:queryCollectedContentsFake" />
+			<camel:process ref="queryCollectedContentsFakeProcessor" />
+		</camel:route>
+		<camel:route id="delContentFromFavoriteFake">
+			<camel:from uri="direct:delContentFromFavoriteFake" />
+			<camel:process ref="delContentFromFavoriteFakeProcessor" />
+		</camel:route>
+		<camel:route id="queryContentTagsFake">
+			<camel:from uri="direct:queryContentTagsFake" />
+			<camel:process ref="queryContentTagsFakeProcessor" />
+		</camel:route>
+		<camel:route id="queryFavoriteOriginsFake">
+			<camel:from uri="direct:queryFavoriteOriginsFake" />
+			<camel:process ref="queryFavoriteOriginsFakeProcessor" />
+		</camel:route>
+		<!-- <camel:route id="queryServicesByContentFake"> <camel:from uri="direct:queryServicesByContentFake" /> <camel:process 
+			ref="queryServicesByContentFakeProcessor" /> </camel:route> -->
+		<camel:route id="modifyFavoriteFlagFake">
+			<camel:from uri="direct:modifyFavoriteFlagFake" />
+			<camel:process ref="modifyFavoriteFlagFakeProcessor" />
+		</camel:route>
+		<camel:route id="modifyContentTagsFake">
+			<camel:from uri="direct:modifyContentTagsFake" />
+			<camel:process ref="modifyContentTagsFakeProcessor" />
+		</camel:route>
+		<camel:route id="addServiceToFavoriteFake">
+			<camel:from uri="direct:addServiceToFavoriteFake" />
+			<camel:process ref="addServiceToFavoriteFakeProcessor" />
+		</camel:route>
+		<camel:route id="delServiceFromFavoriteFake">
+			<camel:from uri="direct:delServiceFromFavoriteFake" />
+			<camel:process ref="delServiceFromFavoriteFakeProcessor" />
+		</camel:route>
+		<camel:route id="queryServiceTagsFake">
+			<camel:from uri="direct:queryServiceTagsFake" />
+			<camel:process ref="queryServiceTagsFakeProcessor" />
+		</camel:route>
+		<!-- fake interfaces definition end -->
+
+		<!-- append routes -->
+
+		<!-- Query Fake Service Detail -->
+		<camel:route id="loopQueryProductDetail">
+			<camel:from uri="direct:loopQueryProductDetail" />
+			<camel:multicast strategyRef="queryCollectedServicesAggregation" parallelProcessing="true">
+				<camel:to uri="direct:queryProductOfferingDetail" />
+				<camel:process ref="keepDataProcessor" />
+			</camel:multicast>
+		</camel:route>
+		<camel:route id="queryProductOfferingDetail">
+			<camel:from uri="direct:queryProductOfferingDetail" />
+			<camel:process ref="queryProductOfferingDetailInProcessor" />
+			<camel:to uri="direct:queryCollectedServicesFake" />
+			<camel:process ref="queryProductOfferingDetailOutProcessor" />
+		</camel:route>
+		
+		<!-- monica add for FindAnalyseResultInProcessor -->
+		<camel:route id = "findAnalyseResult">
+			<!-- 前端调用findAnalyseResult接口，启动如下的route -->
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/findAnalyseResult" />
+			<camel:process ref="generalJettyInProcessor" />
+			<!-- 获取从前端传入的content_id列表 -->
+			<camel:process ref = "getContentIdsInProcessor" />
+			<!-- 遍历传入的content_id列表，调用crm服务获得该content_id在文件服务器对应的url地址 -->
+			<camel:split strategyRef = "contentsInfoAggregation">
+				<camel:tokenize token=";" />
+				<camel:to uri="direct:queryContentById" />
+				<!-- 获取到url地址之后，从文件服务器取出content_id对应的文本信息 -->
+				<camel:process ref="querySingleContentOutProcessor" />	
+			</camel:split>
+			<!-- 将返回的json数据包装成前端要求的返回参数格式 -->
+			<camel:process ref="findAnalyseResultOutProcessor"/>
+			<camel:process ref="getFinalAnalyseResultOutProcessor" />
+		</camel:route>
+
+	</camelContext>
+
+</blueprint>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+定义一个流程实例：
+*arrangementid：这个流程实例对应的流程模板编号（必须设置，否则无法找到对应的流程定义信息）
+*businessid：这个属性记录了外部系统和流程实例绑定的关系，一般可以使用order_id传入并进行绑定
+id : 这个流程实例的编号，可以传入，如果传入系统将以这个id为唯一编号创建流程；否则系统会生成一个
+*creator：这个流程实例的创建者信息，（必须传入）
+*creatorScope：这个流程实例的创建者创建者范围。使用industry、producer、consumer，标明创建者的身份。如果没有，则使用流程模板中的creatorScope
+displayName：展现流程实例的中文名称，如果没有，则以流程模板为准
+-->
+<arrangementInstance arrangementid="" businessid="" id="XXXXXXXX" creator="XXXXXX" creatorScope="industry" displayName="展现流程的中文名称">
+	<!-- 
+	joints集合：如果在创建实例的时候，对流程实例中的某一个或者多个任务实例有特别的属性要求，
+	那么可以使用joints关键字进行定义。
+	
+	注意，定义的jointinstance的任务模板jointid，必须属于这个流程模板，否则会报错。
+	 -->
+	<joints>
+		<!-- 
+		*jointid：必须传入，不然无法找到这个任务实例对应的任务模板
+		absOffsettime：如果要改变流程实例的绝对时间偏移设置，则传入该值。
+		relateOffsettime：如果要改变流程实例的相对时间偏移设置，则传入该值。
+		promptOffsettime：如果要改变 任务偏移量阀值提示，则传入该值
+		offsetTitle：如果要改变 时间线节点名称  ，则传入该值
+		offsetVisible：如果要改变 时间线的可见性 ， 则传入该值
+					producer：服务者可见
+	 				consumer：消费者可见
+	 				both：两者都可见
+	 	expandTypeId：如果要改变 展开的子页面类型ID 则传入该值
+		executor：这个任务的具体执行者。必须传入，否则当流程执行到这里，就不知道“由谁来确认”了
+					只有当这个任务模板中，设置的这个任务executor == null || executor == industry。否则都要设置具体的执行者
+		
+		-->
+		<jointinstance jointid="XXXX" absOffsettime="" relateOffsettime="" promptOffsettime="" offsetTitle="" offsetVisible="" expandTypeId="" executor=""/>
+	</joints>
+</arrangementInstance>

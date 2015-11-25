@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLDescribe>
+	<sql name="IJointInstanceFlowLogDAO.queryLastForwardFlowLog" type="hql" exe="select">
+		from JointInstanceFlowLogEntity l
+		where l.formJointInstanceId = :jointInstanceId and l.flowType = 'forward'
+		order by l.flowExeTime desc
+	</sql>
+</SQLDescribe>

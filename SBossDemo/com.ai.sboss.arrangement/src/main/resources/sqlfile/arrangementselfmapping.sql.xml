@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLDescribe>
+	<sql name="IArrangementSelfMappingDAO.getArrangementSelfMappingSet" type="hql" exe="select">
+		from ArrangementSelfMappingEntity u where u.parentArrangement.uid = :arrangementuid
+	</sql>
+	
+</SQLDescribe>

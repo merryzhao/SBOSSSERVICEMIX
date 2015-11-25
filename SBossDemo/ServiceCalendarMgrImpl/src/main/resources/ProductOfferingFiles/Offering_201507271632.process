@@ -1,0 +1,40 @@
+{
+"data": {
+"offerId": 201507271632,
+"offerName": "UPS Pickup Service",
+"serviceIntroUrl": "http://celinataxicab.com/wp-content/uploads/2014/08/pic4a3.jpg",
+"serviceThumbnailUrl": "",
+"serviceProviderUrl": "http://celinataxicab.com/wp-content/uploads/2014/08/pic3a-300x200.jpg",
+"serviceIntro": "Schedule a free Package Pickup and we will come get your shipment during regular delivery",
+"serviceProvider": "",
+"serviceRating": 5,
+"servicePrice": "￥450/Per",
+"offerProcess": [
+{
+"stepNum": 1,
+"stepDesc": "Set off",
+"timeOffset": -60
+},
+{
+"stepNum": 2,
+"stepDesc": "Arrive airport",
+"timeOffset": 0
+},
+{
+"stepNum": 3,
+"stepDesc": "Check customer information",
+"timeOffset": 30
+},
+{
+"stepNum": 4,
+"stepDesc":"Aboard",
+"timeOffset": 50
+},
+{
+"stepNum": 5,
+"stepDesc":"Arrive destination",
+"timeOffset": 230
+}
+]
+}
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLDescribe>
+	<sql name="IJointInstanceFlowDAO.queryExecutingJointInstanceByArrangementInstanceId" type="hql" exe="select">
+		from JointInstanceFlowEntity f
+		left join fetch f.jointInstance j
+		left join fetch j.arrangementInstance a
+		where a.uid = :arrangementInstanceId and f.statu = 'executing'
+	</sql>
+	
+	<sql name="IJointInstanceFlowDAO.queryJointInstanceByArrangementInstanceId" type="hql" exe="select">
+		from JointInstanceFlowEntity f
+		left join fetch f.jointInstance j
+		left join fetch j.arrangementInstance a
+		where a.uid = :arrangementInstanceId 
+		<isnull param="statu">
+			and f.statu = :statu 
+		</isnull>
+	</sql>
+	
+	<sql name="IJointInstanceFlowDAO.queryJointFlowByJointInstanceId" type="hql" exe="select">
+		from JointInstanceFlowEntity f
+		left join fetch f.jointInstance j
+		where j.uid = :jointInstanceId
+	</sql>
+	
+	<sql name="IJointInstanceFlowDAO.updateJointFlowStatuByFlowId" type="sql" exe="update">
+		UPDATE I_JOINTINSTANCEFLOW SET STATE=:jointStatu WHERE UUID = :uid
+	</sql>
+	
+	<sql name="IJointInstanceFlowDAO.updateCompletedJointInstanceStatuByArrangementInstanceId" type="sql" exe="update">
+		UPDATE I_JOINTINSTANCEFLOW SET STATE='completed' WHERE JOINTINSTANCE in  
+		(select UUID from I_JOINTINSTANCE where ARRANGEMENTINST = :arrangementInstanceId)
+	</sql>
+	
+	<sql name="IJointInstanceFlowDAO.updateFollowedJointInstanceStatuByFlowId" type="sql" exe="update">
+		UPDATE I_JOINTINSTANCEFLOW SET EXETIME=:exeTime , EXECUTOR=:executor , STATE='followed' WHERE UUID = :uid
+	</sql>
+	
+	<sql name="IJointInstanceFlowDAO.querySortedJointInstanceByArrangementInstanceId" type="sql" exe="select">
+		select * from (
+			select 
+			jointinstance.UUID as jointinstance_UUID,
+			jointinstance.ABSOFFSETTIME as jointinstance_ABSOFFSETTIME,
+			jointinstance.CAMELURI as jointinstance_CAMELURI,
+			jointinstance.EXECUTOR as jointinstance_EXECUTOR,
+			jointinstance.PROMPTOFFSETTIME as jointinstance_PROMPTOFFSETTIME,
+			jointinstance.RELATEOFFSETTIME as jointinstance_RELATEOFFSETTIME,
+			jointinstance.ARRANGEMENTINST as jointinstance_ARRANGEMENTINST,
+			jointinstance.JOINT as jointinstance_JOINT,
+			jointinstance.CREATOR as jointinstance_CREATOR,
+			jointinstance.EXPANDTYPEID as jointinstance_EXPANDTYPEID,
+			jointinstance.OFFSETTITLE as jointinstance_OFFSETTITLE,
+			jointinstance.OFFSETVISIBLE as jointinstance_OFFSETVISIBLE,
+			jointinstance.EXETIME as jointinstance_EXETIME,
+			jointinstance.EXPECTEDEXETIME as jointinstance_EXPECTEDEXETIME,
+			jointinstance.STATE as jointinstance_STATE,
+			jointinstance.WEIGHT as jointinstance_WEIGHT,
+			jointinstance.PROPERTIES as jointinstance_PROPERTIES
+			from I_JOINTINSTANCE as jointinstance where jointinstance.ARRANGEMENTINST = :arrangementInstanceId order by jointinstance.EXPECTEDEXETIME asc) jointInstance
+		left join I_JOINTINSTANCEFLOW instanceflow on jointInstance.jointinstance_UUID = instanceflow.JOINTINSTANCE
+	</sql>
+	
+</SQLDescribe>

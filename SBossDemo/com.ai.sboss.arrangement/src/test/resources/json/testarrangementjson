@@ -1,0 +1,39 @@
+{
+    "arrangement": {
+        "creator": "yinwenjie",
+        "creatorScope": "producer",
+        "displayName": "测试流程2",
+        "tradeid":"8888",
+        "tradescope":"industry",
+        "joints": [
+            {
+                "id": "69a1f1e9-21ee-4e4d-9694-ca26635ff882",
+                "visible": "true",
+                "absOffsettime": 800000,
+                "relateOffsettime": 0
+            },
+            {
+                "id": "8bd0117c-046d-4235-b8b3-71b1abb8f0b5",
+                "visible": "true",
+                "absOffsettime": 1800000,
+                "relateOffsettime": 1000000
+            },
+            {
+                "id": "b0c7e31f-9d3f-4700-aa82-b29529099aaf",
+                "visible": "true",
+                "absOffsettime": 2800000,
+                "relateOffsettime": 1000000
+            }
+        ],
+        "flows": [
+            {
+                "source": "joint:69a1f1e9-21ee-4e4d-9694-ca26635ff882",
+                "target": "joint:8bd0117c-046d-4235-b8b3-71b1abb8f0b5"
+            },
+            {
+                "source": "joint:8bd0117c-046d-4235-b8b3-71b1abb8f0b5",
+                "target": "joint:b0c7e31f-9d3f-4700-aa82-b29529099aaf"
+            }
+        ]
+    }
+}

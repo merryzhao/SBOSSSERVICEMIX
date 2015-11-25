@@ -1,0 +1,35 @@
+{
+"data": {
+"offerId": 201507271358,
+"offerName": "Dive into the different SANTORINI",
+"serviceIntroUrl": "https://wanzi-image-alimmdn-com.alikunlun.com/images/549a58fd7bff2.jpg",
+"serviceThumbnailUrl": "",
+"serviceProviderUrl": "https://wanzi-image-alimmdn-com.alikunlun.com/images/549a587f148d5.jpg",
+"serviceIntro": "Keen to be your friend",
+"serviceProvider": "",
+"serviceRating": 5,
+"servicePrice": "￥800/2HOUR",
+"offerProcess": [
+{
+"stepNum": 1,
+"stepDesc": "Set off",
+"timeOffset": -60
+},
+{
+"stepNum": 2,
+"stepDesc": "Arrive destination",
+"timeOffset": 0
+},
+{
+"stepNum": 3,
+"stepDesc": "Guiding",
+"timeOffset": 10
+},
+{
+"stepNum": 4,
+"stepDesc":"Send guests",
+"timeOffset": 130
+}
+]
+}
+}

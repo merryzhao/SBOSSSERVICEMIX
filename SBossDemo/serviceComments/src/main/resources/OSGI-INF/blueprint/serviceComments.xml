@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/blueprint"
+	xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
+	xmlns:jaxws="http://cxf.apache.org/blueprint/jaxws"
+	xsi:schemaLocation="
+       http://www.osgi.org/xmlns/blueprint/v1.0.0 
+       http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+       http://camel.apache.org/schema/blueprint 
+       http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+	<bean id="generalJettyInProcessor"
+		class="com.ai.sboss.serviceComments.processor.GeneralJettyInProcessor" />
+
+	<bean id="saveCommentsInProcessor"
+		class="com.ai.sboss.serviceComments.processor.SaveCommentsInProcessor" />
+	<bean id="saveCommentsOutProcessor"
+		class="com.ai.sboss.serviceComments.respconvertor.SaveCommentsOutProcessor" />
+
+	<bean id="deleteCommentsInProcessor"
+		class="com.ai.sboss.serviceComments.processor.DeleteCommentsInProcessor" />
+	<bean id="deleteCommentsOutProcessor"
+		class="com.ai.sboss.serviceComments.respconvertor.DeleteCommentsOutProcessor" />
+
+	<bean id="addCommentTagsInProcessor"
+		class="com.ai.sboss.serviceComments.processor.AddCommentTagsInProcessor" />
+	<bean id="addCommentTagsOutProcessor"
+		class="com.ai.sboss.serviceComments.respconvertor.AddCommentTagsOutProcessor" />
+
+	<bean id="addGradeSpecificationsInProcessor"
+		class="com.ai.sboss.serviceComments.processor.AddGradeSpecificationsInProcessor" />
+	<bean id="addGradeSpecificationsOutProcessor"
+		class="com.ai.sboss.serviceComments.respconvertor.AddGradeSpecificationsOutProcessor" />
+
+	<bean id="queryCommentTagsInProcessor"
+		class="com.ai.sboss.serviceComments.processor.QueryCommentTagsInProcessor" />
+	<bean id="queryCommentTagsOutProcessor"
+		class="com.ai.sboss.serviceComments.respconvertor.QueryCommentTagsOutProcessor" />
+
+	<bean id="queryGradeSpecificationInProcessor"
+		class="com.ai.sboss.serviceComments.processor.QueryGradeSpecificationInProcessor" />
+	<bean id="queryGradeSpecificationOutProcessor"
+		class="com.ai.sboss.serviceComments.respconvertor.QueryGradeSpecificationOutProcessor" />
+
+	<bean id="querySysGradeSpecificationInProcessor"
+		class="com.ai.sboss.serviceComments.processor.QuerySysGradeSpecificationInProcessor" />
+	<bean id="querySysGradeSpecificationOutProcessor"
+		class="com.ai.sboss.serviceComments.respconvertor.QuerySysGradeSpecificationOutProcessor" />
+
+	<bean id="queryCommentsForServiceDetailInProcessor"
+		class="com.ai.sboss.serviceComments.processor.QueryCommentsForServiceDetailInProcessor" />
+	<bean id="queryCommentsForServiceDetailOutProcessor"
+		class="com.ai.sboss.serviceComments.respconvertor.QueryCommentsForServiceDetailOutProcessor" />
+
+	<bean id="queryCommentsForPartyRoleInProcessor"
+		class="com.ai.sboss.serviceComments.processor.QueryCommentsForPartyRoleInProcessor" />
+	<bean id="queryCommentsForPartyRoleOutProcessor"
+		class="com.ai.sboss.serviceComments.respconvertor.QueryCommentsForPartyRoleOutProcessor" />
+
+
+	<camelContext id="serviceComments" trace="true"
+		xmlns="http://camel.apache.org/schema/blueprint">
+
+		<camel:endpoint id="crmEndpoint"
+			uri="jetty:http://10.5.1.247:5095/HubCrmServlet?bridgeEndpoint=true" />
+
+		<!-- saveComments *True* -->
+		<camel:route id="saveComments">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/saveComments" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:saveCommentsToCrm" />
+			<camel:process ref="saveCommentsOutProcessor" />
+		</camel:route>
+
+		<!-- deleteComments *True* -->
+		<camel:route id="deleteComments">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/deleteComments" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:deleteCommentsToCrm" />
+			<camel:process ref="deleteCommentsOutProcessor" />
+		</camel:route>
+
+		<!-- addCommentTags *True* -->
+		<camel:route id="addCommentTags">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/addCommentTags" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:addCommentTagsToCrm" />
+			<camel:process ref="addCommentTagsOutProcessor" />
+		</camel:route>
+
+		<!-- addGradeSpecifications *True* -->
+		<camel:route id="addGradeSpecifications">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/addGradeSpecifications" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:addGradeSpecificationsToCrm" />
+			<camel:process ref="addGradeSpecificationsOutProcessor" />
+		</camel:route>
+
+		<!-- queryCommentsForServiceDetail *True* -->
+		<camel:route id="queryCommentsForServiceDetail">
+			<camel:from
+				uri="jetty:http://0.0.0.0:8282/sboss/queryCommentsForServiceDetail" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryCommentsForServiceDetailToCrm" />
+			<camel:process ref="queryCommentsForServiceDetailOutProcessor" />
+		</camel:route>
+
+		<!-- queryCommentsForPartyRole *True* -->
+		<camel:route id="queryCommentsForPartyRole">
+			<camel:from
+				uri="jetty:http://0.0.0.0:8282/sboss/queryCommentsForPartyRole" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryCommentsForPartyRoleToCrm" />
+			<camel:process ref="queryCommentsForPartyRoleOutProcessor" />
+		</camel:route>
+
+		<!-- queryCommentTags *True* -->
+		<camel:route id="queryCommentTags">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryCommentTags" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryCommentTagsToCrm" />
+			<camel:process ref="queryCommentTagsOutProcessor" />
+		</camel:route>
+
+		<!-- queryGradeSpecification *True* -->
+		<camel:route id="queryGradeSpecification">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryGradeSpecification" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryGradeSpecificationToCrm" />
+			<camel:process ref="queryGradeSpecificationOutProcessor" />
+		</camel:route>
+
+		<!-- querySysGradeSpecification *True* -->
+		<camel:route id="querySysGradeSpecification">
+			<camel:from
+				uri="jetty:http://0.0.0.0:8282/sboss/querySysGradeSpecification" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:querySysGradeSpecificationToCrm" />
+			<camel:process ref="querySysGradeSpecificationOutProcessor" />
+		</camel:route>
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="saveCommentsToCrm">
+			<camel:from uri="direct:saveCommentsToCrm" />
+			<camel:process ref="saveCommentsInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end saveCommentsToCrm -->
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="deleteCommentsToCrm">
+			<camel:from uri="direct:deleteCommentsToCrm" />
+			<camel:process ref="deleteCommentsInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end deleteCommentsToCrm -->
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="addCommentTagsToCrm">
+			<camel:from uri="direct:addCommentTagsToCrm" />
+			<camel:process ref="addCommentTagsInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end addCommentTagsToCrm -->
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="addGradeSpecificationsToCrm">
+			<camel:from uri="direct:addGradeSpecificationsToCrm" />
+			<camel:process ref="addGradeSpecificationsInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end addGradeSpecificationsToCrm -->
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="queryCommentsForServiceDetailToCrm">
+			<camel:from uri="direct:queryCommentsForServiceDetailToCrm" />
+			<camel:process ref="queryCommentsForServiceDetailInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end queryCommentsForServiceDetail -->
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="queryCommentsForPartyRoleToCrm">
+			<camel:from uri="direct:queryCommentsForPartyRoleToCrm" />
+			<camel:process ref="queryCommentsForPartyRoleInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end queryCommentsForPartyRoleToCrm -->
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="queryCommentTagsToCrm">
+			<camel:from uri="direct:queryCommentTagsToCrm" />
+			<camel:process ref="queryCommentTagsInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end queryCommentTagsToCrm -->
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="queryGradeSpecificationToCrm">
+			<camel:from uri="direct:queryGradeSpecificationToCrm" />
+			<camel:process ref="queryGradeSpecificationInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end queryGradeSpecificationToCrm -->
+
+		<!-- backend interfaces definition start -->
+		<camel:route id="querySysGradeSpecificationToCrm">
+			<camel:from uri="direct:querySysGradeSpecificationToCrm" />
+			<camel:process ref="querySysGradeSpecificationInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- end queryGradeSpecificationToCrm -->
+
+	</camelContext>
+
+</blueprint>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <!--
+	专门为事件驱动所准备的配置信息
+    ===========================以下配置和事件监听有关
+    -->
+    <bean id="eventSourceFactoryBean" class="com.ai.sboss.arrangement.event.local.EventSourceLocalFactoryBean" init-method="init">
+		<property name="configure" ref="receiveConfigure"></property>
+	</bean>
+	
+	<bean id="receiveConfigure" class="com.ai.sboss.arrangement.event.local.ReceiveLocalConfigure" >
+		<property name="eventConsumerThreadName" value="eventConsumerThread"></property>
+		<property name="eventNotificationThreadName" value="eventNotificationThread"></property>
+		<property name="listenerExecutors" ref="listenerExecutors"></property>
+	</bean>
+	
+	<bean id="listenerExecutors" scope="singleton" class="java.util.concurrent.ThreadPoolExecutor">
+		<constructor-arg value="10" type="int"></constructor-arg>
+		<constructor-arg value="10" type="int"></constructor-arg>
+		<constructor-arg value="3000" type="long"></constructor-arg>
+		<constructor-arg value="MILLISECONDS" type="java.util.concurrent.TimeUnit"></constructor-arg>
+		<constructor-arg ref="linkedBlockingQueue"></constructor-arg>
+	</bean>
+	
+	<bean id="linkedBlockingQueue" class="java.util.concurrent.LinkedBlockingQueue"></bean>
+	
+	<bean id="eventConsumerThread" class="com.ai.sboss.arrangement.event.local.EventMessageConsumerThread"></bean>
+	
+	<bean id="eventNotificationThread" class="com.ai.sboss.arrangement.event.local.EventMessageNotificationThead"></bean>
+	
+	
+	 <!--
+    ===========================以下配置和事件驱动有关
+    -->
+    <bean id="eventSendFactory" class="com.ai.sboss.arrangement.event.local.EventSendLocalFactoryBean">
+    	<property name="configure" ref="senderConfigure"></property>
+    </bean>
+    
+    <bean id="senderConfigure" class="com.ai.sboss.arrangement.event.local.SenderLocalConfigure">
+    	<property name="beginEventSender" ref="beginEventSender"></property>
+    	<property name="endEventSender" ref="endEventSender"></property>
+    	<property name="exceptionEventSender" ref="exceptionEventSender"></property>
+    	<property name="flowEventSender" ref="flowEventSender"></property>
+    </bean>
+    
+    <bean id="beginEventSender" class="com.ai.sboss.arrangement.event.local.ArrangementBeginEventLocalSender"></bean>
+    <bean id="endEventSender" class="com.ai.sboss.arrangement.event.local.ArrangementEndEventLocalSender"></bean>
+    <bean id="exceptionEventSender" class="com.ai.sboss.arrangement.event.local.ArrangementExceptionEventLocalSender"></bean>
+    <bean id="flowEventSender" class="com.ai.sboss.arrangement.event.local.ArrangementFlowEventLocalSender"></bean>
+</beans>

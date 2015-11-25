@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd
+		">
+    
+    <!--
+	专门为事件驱动所准备的配置信息
+    ===========================以下配置和事件监听有关
+    -->
+    <bean id="eventSourceFactoryBean" scope="singleton" class="com.ai.sboss.arrangement.event.amqp.EventSourceAMQPFactoryBean"></bean>
+	<bean id="receiveEventQueueLitener" class="com.ai.sboss.arrangement.event.amqp.ReceiveEventQueueListener">
+		<property name="eventSourceAMQPFactoryBean" ref="eventSourceFactoryBean"></property>
+	</bean>
+	
+	<!-- queue litener  观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象，注意acknowledge设置的手动ack
+    	注意两个关键信息：
+    	prefetch：指消费者每次去server上取消息的最大数量
+    	task-executor：一般我们会使用线程池（加快消息处理速度）
+    -->
+    <rabbit:listener-container prefetch="5" task-executor="event_task_executor" connection-factory="connectionFactory" acknowledge="manual">
+		<rabbit:listener queues="eventQueues" ref="receiveEventQueueLitener" />
+	</rabbit:listener-container>
+	<!-- 这句话用于spring-app连接server后，创建队列。当然可以没有，如果队列已经在server上设置好的话 -->
+	<rabbit:queue id="eventQueues" durable="true" auto-delete="false" exclusive="false" name="com.ai.sboss.arrangement.event.queues"/>
+	<!-- 这就是线程池了 -->
+	<bean id="event_task_executor" scope="singleton" class="java.util.concurrent.ThreadPoolExecutor">
+		<constructor-arg value="10" type="int"></constructor-arg>
+		<constructor-arg value="10" type="int"></constructor-arg>
+		<constructor-arg value="3000" type="long"></constructor-arg>
+		<constructor-arg value="MILLISECONDS" type="java.util.concurrent.TimeUnit"></constructor-arg>
+		<constructor-arg ref="linkedBlockingQueue"></constructor-arg>
+	</bean>
+	<bean id="linkedBlockingQueue" class="java.util.concurrent.LinkedBlockingQueue"></bean>
+	
+	<!--template spring service服务层使用，用来向AMQP实现写入消息-->
+    <rabbit:template exchange="com.ai.sboss.arrangement.event" id="amqpTemplate" routing-key="com.ai.sboss.arrangement.event.queues" connection-factory="connectionFactory"/>
+    
+    <!-- 这个配置是创建exchange以及和queue的绑定关系 -->
+    <rabbit:topic-exchange name="com.ai.sboss.arrangement.event" auto-delete="false" durable="true">
+    	<rabbit:bindings>
+    		<rabbit:binding queue="com.ai.sboss.arrangement.event.queues" pattern="com.ai.sboss.arrangement.event.queues"></rabbit:binding>
+    	</rabbit:bindings>
+    </rabbit:topic-exchange>
+    
+    <!-- AMQP（rabbitMQ） 连接 -->
+	<rabbit:connection-factory id="connectionFactory" host="127.0.0.1" username="guest" password="guest" virtual-host="/"/>
+	<rabbit:admin connection-factory="connectionFactory"/>
+	<!--
+    ===========================以下配置和事件驱动有关
+    -->
+    <bean id="eventSendFactory" class="com.ai.sboss.arrangement.event.amqp.EventSendAMQPFactoryBean">
+    	<property name="configure" ref="senderConfigure"></property>
+    </bean>
+    
+    <bean id="senderConfigure" class="com.ai.sboss.arrangement.event.amqp.SendAMQPConfigure">
+    	<property name="beginEventSender" ref="beginEventSender"></property>
+    	<property name="endEventSender" ref="endEventSender"></property>
+    	<property name="exceptionEventSender" ref="exceptionEventSender"></property>
+    	<property name="flowEventSender" ref="flowEventSender"></property>
+    </bean>
+    
+    <bean id="beginEventSender" class="com.ai.sboss.arrangement.event.amqp.ArrangementBeginEventAMQPSender">
+    	<property name="amqpTemplate" ref="amqpTemplate"></property>
+    </bean>
+    <bean id="endEventSender" class="com.ai.sboss.arrangement.event.amqp.ArrangementEndEventAMQPSender">
+    	<property name="amqpTemplate" ref="amqpTemplate"></property>
+    </bean>
+    <bean id="flowEventSender" class="com.ai.sboss.arrangement.event.amqp.ArrangementFlowEventAMQPSender">
+    	<property name="amqpTemplate" ref="amqpTemplate"></property>
+    </bean>
+    <bean id="exceptionEventSender" class="com.ai.sboss.arrangement.event.amqp.ArrangementExceptionEventAMQPSender">
+    	<property name="amqpTemplate" ref="amqpTemplate"></property>
+    </bean>
+</beans>

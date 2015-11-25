@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 此文档记录了编排系统，定义一个任务的格式 -->
+<!-- 
+一个节点代表整个业务流程的某一个点。
+这些点都是在我们系统中预制好的，对应了UPC开发的某个服务（？真相是不是这样呢），对应了activiti中已经定制好的某一个subprocessor。
+
+displayName：任务中文名
+id：这个joint在编排系统中的唯一编号。（可以设置，设置了就用设置的，如果没有设置，系统会生成一个）
+upcService：对应的upc服务的信息（但不知道最重是不是需要）
+subProcessor：这个任务节点对应的activiti子节点的标示
+executor：任务默认执行者(范围)
+-->
+<joint displayName="全面贯通测试任务3" camelUri="http://localhost:8282/sboss/queryJointInstanceByUserid" executor="industry" weight="2">
+	<!-- 可以使用这个服务的行业描述，这个trades元素必须存在，且其中至少有一个trade元素 -->
+	<trades>
+		<!--
+		一个行业
+		id：可以使用这个trade的行业编号
+		scope：可以使用这个业务服务的范围：
+			industry：只能作为某个行业的默认服务，不能被服务者或者消费者的自定义流程引用
+			producer：可以作为行业的默认服务或者服务者的自定义流程，但是不能被消费者的自定义流程引用
+			consumer：可以作为行业的默认服务、服务者或者消费用的自定义流程
+		-->
+		<trade id="9999123" scope="industry"></trade>
+		<trade id="88883" scope="producer"></trade>
+	</trades>
+	
+	<!--
+	默认的任务偏移量。任务偏移量是指从流程原点开始，到当前这个任务开始执行，还有多长的时间偏移（单位毫秒）
+	中间的文本信息是任务提醒
+	abs相对于整个实际时间线原点的偏移
+	relate相对于当前任务时间原点的偏移
+	-->
+	<offsettime abs="1000000" relate="900000">时间线节点3</offsettime>
+	
+	<!-- 入参，输入参数信息 -->
+	<inputs>
+		<!-- 
+		一个参数信息
+		name：参数名称
+		type：参数信息，目前支持的参数类型包括String，Boolean，Integer，Long，Float，Double，JSON，XML，Date
+		displayName：参数的中文信息，可以有这个属性的设置，也可以没有这个属性的设置
+		required：是否是必须的入参，默认是true
+		default：默认值，当required=true，但是有没有传入时，default就会起作用
+		-->
+		<param name="alluserid3" type="String" displayName="贯通测试用户id3" dispalyType="字符串" required="true"></param>
+	</inputs>
+	
+	<!-- 出参，输出参数信息 -->
+	<outputs>
+		<!-- 
+		name：参数名称
+		type：参数信息，目前支持的参数类型包括String，Boolean，Integer，Long，Float，Double，JSON，XML，Date
+		required：是否是必须的出参，默认是true
+		default：默认值，当required=true，但是有没有传入时，default就会起作用
+		-->
+		<param name="allmaxPageRows3" type="Integer" required="true" ></param>
+		<param name="allnowPage3" type="Integer" required="True"></param>
+	</outputs>
+</joint>

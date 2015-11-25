@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLDescribe>
+	<sql name="IJointDAO.queryJointByDisplayName" type="hql" exe="select">
+		from JointEntity u where u.displayName = :displayName
+	</sql>
+
+	<sql name="IJointDAO.queryJointByDisplayNameWithParams" type="hql" exe="select">
+		from JointEntity u
+		left join fetch u.outputParams outputParams
+		left join fetch u.inputParams inputParams
+		left join fetch u.trades trades
+		where u.displayName = :displayName
+	</sql>
+	
+	<sql name="IJointDAO.queryMappingJointByTradeid" type="hql" exe="select">
+		select distinct u 
+		from JointEntity u
+		left join fetch u.arrangementJointMappings m
+		left join fetch m.parentArrangement p
+		where p.tradeid = :tradeid and p.creatorScope = 'industry'
+		order by u.absOffsettime
+	</sql>
+
+	<sql name="IJointDAO.queryJointByTradeid" type="hql" exe="select">
+		from JointEntity u
+		left join fetch u.trades t where t.tradeid = :tradeid
+		<isnull param="scope">
+			and t.scope = :scope
+		</isnull>
+	</sql>
+	
+	<sql name="IJointDAO.queryJointByArrangementID" type="hql" exe="select">
+		from JointEntity u 
+		left join fetch u.arrangementJointMappings m
+		left join fetch m.parentArrangement p
+		where p.uid = :arrangementID 
+		order by u.absOffsettime
+	</sql>
+	
+
+	<sql name="IJointDAO.getJointWithoutParams" type="hql" exe="select">
+		from JointEntity u where u.uid = :jointuid
+	</sql>
+
+	<sql name="IJointDAO.getJointWithParams" type="hql" exe="select">
+		from JointEntity u
+		left join fetch u.outputParams outputParams
+		left join fetch u.inputParams inputParams
+		left join fetch u.trades trades
+		where u.uid = :jointuid
+	</sql>
+
+	<!-- 这些都是实例，没有被引用的 -->
+	<sql name="ILBUserDao.updateLogonTime" type="sql" exe="update">
+		update base_user set base_user.user_lastlogontime = :logontime where base_user.uid = :uid
+	</sql>
+
+	<sql name="ILBUserDao.updateLogoutTime" type="sql" exe="update">
+		update base_user set base_user.user_lastlogouttime = :logouttime where base_user.uid = :uid
+	</sql>
+
+	<sql name="ILBUserDao.disableUser" type="sql" exe="update">
+		update base_user set base_user.status = 2 where base_user.user_name = :user_name
+	</sql>
+
+	<sql name="ILBUserDao.enableUser" type="sql" exe="update">
+		update base_user set base_user.status = 1 where base_user.user_name = :user_name
+	</sql>
+</SQLDescribe>

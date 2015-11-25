@@ -1,0 +1,30 @@
+{
+"data": {
+"offerId": 201507201604,
+"offerName": "Home on the road",
+"serviceIntroUrl": "http://exp.cdn-hotels.com/hotels/3000000/2200000/2193300/2193290/2193290_45_y.jpg",
+"serviceThumbnailUrl": "",
+"serviceProviderUrl": "http://img1.gtimg.com/tangshan_house/pics/hv1/83/25/8/526658.jpg",
+"serviceIntro": "Warm and comfortable two bedroom.",
+"serviceProvider": "",
+"serviceRating": 5,
+"servicePrice": "￥3220/6DAY",
+"offerProcess": [
+{
+"stepNum": 1,
+"stepDesc": "Check customer information",
+"timeOffset": -60
+},
+{
+"stepNum": 2,
+"stepDesc": "Check in",
+"timeOffset": 0
+},
+{
+"stepNum": 3,
+"stepDesc": "Check out",
+"timeOffset": 8000
+}
+]
+}
+}

@@ -1,0 +1,30 @@
+{
+"data": {
+"offerId": 201507201655,
+"offerName": "Service delivery",
+"serviceIntroUrl": "http://pagead2.googlesyndication.com/simgad/343197717801208867",
+"serviceThumbnailUrl": "",
+"serviceProviderUrl": "http://shiroube.com/system/avatars/8160/small/Passph.%201%20inch%2017.07.15.jpg?1437359591",
+"serviceIntro": "AUDI SUV",
+"serviceProvider": "",
+"serviceRating": 5,
+"servicePrice": "￥420/6DAY",
+"offerProcess": [
+{
+"stepNum": 1,
+"stepDesc": "Get prepare",
+"timeOffset": -60
+},
+{
+"stepNum": 2,
+"stepDesc": "Start up",
+"timeOffset": -20
+},
+{
+"stepNum": 3,
+"stepDesc": "Arrive airport",
+"timeOffset": 0
+}
+]
+}
+}

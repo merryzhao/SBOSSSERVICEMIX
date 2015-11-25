@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLDescribe>
+	<sql name="IJointInputParamsInstanceDAO.queryInputParamsInstanceByJointInstanceID" type="hql" exe="select">
+		from JointInputParamsInstanceEntity u 
+		left join fetch u.jointInstance joint
+		where joint.uid = :jointInstanceuid
+		<isnull param="required" >
+			and u.required = :required
+		</isnull>
+	</sql>
+	
+	<sql name="IJointInputParamsInstanceDAO.queryInputParamsInstanceByName" type="hql" exe="select">
+		from JointInputParamsInstanceEntity u 
+		left join fetch u.jointInstance joint
+		where joint.uid = :jointInstanceid
+		and u.name = :name
+	</sql>
+</SQLDescribe>

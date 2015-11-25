@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLDescribe>
+	<sql name="IJointOutputParamsDAO.queryOutputParamsByjointuid" type="hql" exe="select">
+		from JointOutputParamsEntity u where u.joint.uid = :jointuid
+	</sql>
+	
+</SQLDescribe>

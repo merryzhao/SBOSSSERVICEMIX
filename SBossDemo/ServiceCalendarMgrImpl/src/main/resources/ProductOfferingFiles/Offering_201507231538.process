@@ -1,0 +1,30 @@
+{
+"data": {
+"offerId": 201507231538,
+"offerName": "Flight LH457",
+"serviceIntroUrl": "http://pic.c-ctrip.com/flight_intl/airline_logo/40x35/UA.png",
+"serviceThumbnailUrl": "",
+"serviceProviderUrl": "http://d.hiphotos.baidu.com/baike/g%3D0%3Bw%3D268/sign=03560851a3efce1bfa2bcdc1d86cc1e8/b21c8701a18b87d6b4c6e0b8030828381e30fd95.jpg",
+"serviceIntro": "Comfortable, Free and Cheap Enough",
+"serviceProvider": "",
+"serviceRating": 5,
+"servicePrice": "￥2000/PEOPLE",
+"offerProcess": [
+{
+"stepNum": 1,
+"stepDesc": "Check in",
+"timeOffset": 0
+},
+{
+"stepNum": 2,
+"stepDesc": "Departure",
+"timeOffset": 0
+},
+{
+"stepNum": 3,
+"stepDesc": "Arrive",
+"timeOffset": 760
+}
+]
+}
+}

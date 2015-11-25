@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/blueprint"
+	xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
+	xmlns:jaxws="http://cxf.apache.org/blueprint/jaxws"
+	xsi:schemaLocation="
+       http://www.osgi.org/xmlns/blueprint/v1.0.0
+       http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+       http://camel.apache.org/schema/blueprint
+       http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+	<!-- processor begin -->
+	<bean id="aggregationProcessor" class="com.ai.sboss.customer.aggregate.AggregationProessor" />
+	<bean id="queryCustomerProcessor" class="com.ai.sboss.customer.processor.QueryCustomerProcessor" />
+	<bean id="queryCustomerAccountProcessor"
+		class="com.ai.sboss.customer.processor.QueryCustomerAccountProcessor" />
+	<bean id="queryNewCommonlyUsedAddressProcessor"
+		class="com.ai.sboss.customer.processor.QueryNewCommonlyUsedAddressProcessor" />
+	<bean id="generalJettyInProcessor" class="com.ai.sboss.customer.processor.GeneralJettyInProcessor" />
+	<bean id="queryTimeLineFromProcessInProcessor"
+		class="com.ai.sboss.customer.processor.QueryTimeLineFromProcessInProcessor" />
+	<bean id="queryTimeLineFromJointsInProcessor"
+		class="com.ai.sboss.customer.processor.QueryTimeLineFromJointsInProcessor" />
+	<bean id="queryTimeLineFromOrdersInProcessor"
+		class="com.ai.sboss.customer.processor.QueryTimeLineFromOrdersInProcessor" />
+	<bean id="queryPartyRoleIdInProcessor" class="com.ai.sboss.customer.processor.QueryPartyRoleIdInProcessor" />
+	<bean id="checkCustomerPasswordInProcessor" class="com.ai.sboss.customer.processor.CheckCustomerPasswordInProcessor" />
+
+	<!-- add in process for acquire customer -->
+	<bean id="acquireCustomerInProcessor"
+		class="com.ai.sboss.customer.processor.AcquireCustomerInProcessor" />
+	<bean id="queryLocationInProcessor"
+		class="com.ai.sboss.customer.processor.QueryLocationInProcessor" />
+	<bean id="getPlaceIdListInProcessor"
+		class="com.ai.sboss.customer.processor.GetPlaceIdListInProcessor" />
+	<bean id="getPlaceLoopIdInProcessor"
+		class="com.ai.sboss.customer.processor.GetPlaceLoopIdInProcessor" />
+	<bean id="getLocationInfoAggregation"
+		class="com.ai.sboss.customer.processor.GetLocationInfoAggregation" />
+	<bean id="getCustomerInfoAggregation"
+		class="com.ai.sboss.customer.processor.GetCustomerInfoAggregation" />
+	<bean id="queryProviderInfoInProcessor" 
+		class="com.ai.sboss.customer.processor.QueryProviderInfoInProcessor" />
+
+	<!-- processor end -->
+
+	<!-- converter begin -->
+	<bean id="queryCustomerConvertor"
+		class="com.ai.sboss.customer.respconvertor.QueryCustomerConvertor" />
+	<bean id="queryCustomerAccountConvertor"
+		class="com.ai.sboss.customer.respconvertor.QueryCustomerAccountConvertor" />
+	<bean id="queryNewCommonlyUsedAddressConvertor"
+		class="com.ai.sboss.customer.respconvertor.QueryNewCommonlyUsedAddressConvertor" />
+	<bean id="queryNodesFilterListProcessor"
+		class="com.ai.sboss.customer.respconvertor.QueryNodesFilterListProcessor" />
+
+	<bean id="queryTimeLineFromProcessConvertor"
+		class="com.ai.sboss.customer.respconvertor.QueryTimeLineFromProcessConvertor" />
+	<bean id="queryTimeLineFromJointsConvertor"
+		class="com.ai.sboss.customer.respconvertor.QueryTimeLineFromJointsConvertor" />
+	<bean id="queryNodesFromTimeLineConvertor"
+		class="com.ai.sboss.customer.respconvertor.QueryNodesFromTimeLineConvertor" />
+	<bean id="queryTimeLineFromOrdersConvertor"
+		class="com.ai.sboss.customer.respconvertor.QueryTimeLineFromOrdersConvertor" />
+	<bean id="timeListDataAggregation"
+		class="com.ai.sboss.customer.respconvertor.TimeListDataAggregation" />
+	<bean id="queryPartyRoleIdConvertor"
+		class="com.ai.sboss.customer.respconvertor.QueryPartyRoleIdConvertor" />
+	<bean id="checkCustomerPasswordConvertor"
+		class="com.ai.sboss.customer.respconvertor.CheckCustomerPasswordConvertor" />
+
+	<!-- add out process for acquire customer -->
+	<bean id="acquireCustomerOutProcessor"
+		class="com.ai.sboss.customer.respconvertor.AcquireCustomerOutProcessor" />
+	<bean id="queryLocationOutProcessor"
+		class="com.ai.sboss.customer.respconvertor.QueryLocationOutProcessor" />
+	<bean id="customerLocationOutProcessor"
+		class="com.ai.sboss.customer.respconvertor.CustomerLocationOutProcessor" />
+	<bean id="customerInfoOutProcessor"
+		class="com.ai.sboss.customer.respconvertor.CustomerInfoOutProcessor" />
+	<bean id="queryProviderInfoOutProcessor" 
+		class="com.ai.sboss.customer.respconvertor.QueryProviderInfoOutProcessor" />
+
+
+	<!-- converter end -->
+
+	<!-- aggregation begin -->
+	<bean id="queryCustomerGeneralConvertor"
+		class="com.ai.sboss.customer.aggregate.QueryCustomerGeneralConvertor" />
+	<bean id="queryCustomerDataAggregate"
+		class="com.ai.sboss.customer.aggregate.QueryCustomerDataAggregate" />
+	<bean id="timeLineAggregation" class="com.ai.sboss.customer.aggregate.TimeLineAggregation" />
+	<bean id="orderListAggregation" class="com.ai.sboss.customer.aggregate.OrderListAggregation" />
+    <bean id="loginAggregation" class="com.ai.sboss.customer.aggregate.LoginAggregation" />
+
+
+	<!-- aggregation end -->
+	<bean id="queryCustomerDataFake" class="com.ai.sboss.customer.fake.QueryCustomerDataFake" />
+	<bean id="keepDataProcessor" class="com.ai.sboss.customer.processor.KeepDataProcessor" />
+
+
+	<camelContext id="customercontext" trace="false"
+		xmlns="http://camel.apache.org/schema/blueprint">
+		<camel:endpoint id="crmEndpoint"
+			uri="jetty:http://10.5.1.247:5095/HubCrmServlet?bridgeEndpoint=true" />
+		<camel:endpoint id="crmEndpointPass"
+			uri="jetty:http://10.5.1.173:5091/HubCrmServlet?bridgeEndpoint=true" />
+		<camel:endpoint id="crmEndpointSaas"
+			uri="jetty:http://10.5.1.173:5095/HubCrmServlet?bridgeEndpoint=true" />
+		<camel:endpoint id="queryNodesFromTimeLine"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryNodesFromTimeLine" />
+		<camel:endpoint id="getUserInfoByMobileNumberEndPoint"
+			uri="jetty:http://0.0.0.0:8282/sboss/getUserInfoByMobileNumber" />
+		<camel:endpoint id="queryJointInstanceByUserid"
+			uri="jetty:http://localhost:8282/sboss/queryJointInstanceByUserid" />
+		<camel:endpoint id="queryMappingJointByTradeid"
+			uri="jetty:http://localhost:8282/sboss/queryMappingJointByTradeid" />
+		<camel:endpoint id="queryOrderList"
+			uri="jetty:http://localhost:8282/sboss/queryOrderList" />
+
+		<!-- 查询时间线 -->
+		<camel:route id="queryNodesFromTimeLineRoute">
+			<camel:from ref="queryNodesFromTimeLine" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:multicast strategyRef="orderListAggregation"
+				parallelProcessing="true">
+				<camel:to uri="direct:queryTimeLineFromOrders" />
+				<camel:process ref="keepDataProcessor" />
+			</camel:multicast>
+			<camel:process ref="queryNodesFilterListProcessor" />
+			<camel:split strategyRef="timeLineAggregation">
+				<camel:tokenize token=";" />
+				<camel:multicast strategyRef="orderListAggregation"
+					parallelProcessing="true">
+					<camel:to uri="direct:queryTimeLineFromJoints" />
+					<camel:process ref="keepDataProcessor" />
+				</camel:multicast>
+				<camel:process ref="timeListDataAggregation" />
+			</camel:split>
+			<camel:process ref="queryNodesFromTimeLineConvertor" />
+		</camel:route>
+
+     <camel:route id="login">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/login" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:multicast strategyRef="loginAggregation" parallelProcessing="true">
+				<camel:to uri="direct:queryPartyRoleId" />
+				<camel:process ref="keepDataProcessor" />
+			</camel:multicast>
+			<camel:to uri="direct:checkCustomerPassword" />
+		</camel:route>
+
+		<camel:route id="queryPartyRoleId">
+			<camel:from uri="direct:queryPartyRoleId" />
+			<camel:process ref="queryPartyRoleIdInProcessor" />
+			<camel:to ref="crmEndpoint"/>
+			<camel:process ref="queryPartyRoleIdConvertor" />
+		</camel:route>
+
+        <camel:route id="checkCustomerPassword">
+			<camel:from uri="direct:checkCustomerPassword" />
+			<camel:process ref="checkCustomerPasswordInProcessor" />
+			<camel:to ref="crmEndpoint"/>
+			<camel:process ref="checkCustomerPasswordConvertor"></camel:process>
+		</camel:route>
+
+
+		<camel:route id="queryCustomer">
+			<camel:from uri="direct:queryCustomer" />
+			<camel:process ref="queryCustomerProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<!-- <camel:bean ref="queryCustomerConvertor" method="convert" /> -->
+			<camel:process ref="queryCustomerConvertor" />
+		</camel:route>
+
+		<camel:route id="queryNewCommonlyUsedAddress">
+			<camel:from uri="direct:queryNewCommonlyUsedAddress" />
+			<camel:process ref="queryNewCommonlyUsedAddressProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<!-- <camel:bean ref="queryNewCommonlyUsedAddressConvertor" method="convert"
+				/> -->
+			<camel:process ref="queryNewCommonlyUsedAddressConvertor" />
+		</camel:route>
+
+		<camel:route id="getUserInfoByOpenId">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/getUserInfoByOpenId" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:getUserInfoByOpenId" />
+			<camel:process ref="queryCustomerConvertor" />
+		</camel:route>
+
+		<camel:route id="getUserInfoByMobileNumber">
+			<camel:from uri="getUserInfoByMobileNumberEndPoint" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:bean ref="queryCustomerDataFake" method="queryUserInfoByMobileNumber" />
+			<camel:process ref="queryCustomerConvertor" />
+		</camel:route>
+
+		<camel:route id="getUserInfoByOpenIdCRM">
+			<camel:from uri="direct:getUserInfoByOpenId" />
+			<camel:bean ref="queryCustomerDataFake" method="queryUserInfoByOpenId" />
+		</camel:route>
+
+		<camel:route id="getUserInfoCRM">
+			<camel:from uri="direct:getUserInfoCRM" />
+			<camel:bean ref="queryCustomerDataFake" method="queryUserInfoByUserId" />
+		</camel:route>
+		<!-- <camel:route id="queryCustomerAccount"> <camel:from uri="direct:queryCustomerAccount"
+			/> <camel:process ref="queryCustomerAccountProcessor" /> <camel:to ref="crmEndpoint"
+			/> <camel:bean ref="queryCustomerAccountConvertor" method="convert" /> </camel:route> -->
+
+		<camel:route id="queryTimeLineFromInstance">
+			<camel:from uri="direct:queryTimeLineFromInstance" />
+			<camel:process ref="queryTimeLineFromProcessInProcessor" />
+			<camel:to ref="queryJointInstanceByUserid" />
+			<camel:process ref="queryTimeLineFromProcessConvertor" />
+		</camel:route>
+
+		<camel:route id="queryTimeLineFromJoints">
+			<camel:from uri="direct:queryTimeLineFromJoints" />
+			<camel:process ref="queryTimeLineFromJointsInProcessor" />
+			<camel:to ref="queryMappingJointByTradeid" />
+			<camel:process ref="queryTimeLineFromJointsConvertor" />
+		</camel:route>
+
+		<camel:route id="queryTimeLineFromOrdersRoute">
+			<camel:from uri="direct:queryTimeLineFromOrders" />
+			<camel:process ref="queryTimeLineFromOrdersInProcessor" />
+			<camel:to ref="queryOrderList" />
+			<camel:process ref="queryTimeLineFromOrdersConvertor" />
+		</camel:route>
+
+		<!-- add camel route for acquire customer -->
+		<camel:route id="acquireCustomer">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/acquireCustomer" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:acquireCustomerCRM" />
+		</camel:route>
+
+		<camel:route>
+			<camel:from uri="direct:acquireCustomerCRM" />
+			<camel:process ref="acquireCustomerInProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="acquireCustomerOutProcessor" />
+		</camel:route>
+
+		<camel:route id="queryLocation">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryLocation" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryLocationCRM" />
+		</camel:route>
+
+		<camel:route>
+			<camel:from uri="direct:queryLocationCRM" />
+			<camel:process ref="queryLocationInProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="queryLocationOutProcessor" />
+		</camel:route>
+
+		<camel:route id="getUserInfo">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/getUserInfo" />
+			<camel:process ref="generalJettyInProcessor" />
+			<!-- 查询客户信息 -->
+			<camel:to uri="direct:acquireCustomerCRM" />
+
+			<camel:multicast strategyRef="getCustomerInfoAggregation"
+				parallelProcessing="true">
+				<camel:to uri="direct:getUserLocation" />
+				<camel:process ref="keepDataProcessor" />
+			</camel:multicast>
+			<camel:process ref="customerInfoOutProcessor" />
+		</camel:route>
+
+
+		<!-- 根据客户信息中的placeId查询地址信息 -->
+		<camel:route id="getUserLocation">
+			<camel:from uri="direct:getUserLocation" />
+			<camel:process ref="getPlaceIdListInProcessor" />
+			<camel:split strategyRef="getLocationInfoAggregation">
+				<camel:tokenize token=";" />
+				<!--camel:process ref="getPlaceLoopIdInProcessor" / -->
+				<camel:to uri="direct:queryLocationCRM" />
+			</camel:split>
+			<!-- 将查询到的位置信息转化为JSONObject，同时封装成前端数据包 -->
+			<camel:process ref="customerLocationOutProcessor" />
+		</camel:route>
+		
+		<!-- 根据卖家用户ID查询卖家信息 -->
+		<camel:route id="queryProviderInfo">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/getProviderInfo" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryProviderInfoCRM" />
+		</camel:route>
+		
+		<camel:route>
+			<camel:from uri="direct:queryProviderInfoCRM" />
+			<camel:process ref="queryProviderInfoInProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="queryProviderInfoOutProcessor" />
+		</camel:route>
+
+	</camelContext>
+</blueprint>

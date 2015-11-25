@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/blueprint"
+	xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
+	xmlns:jaxws="http://cxf.apache.org/blueprint/jaxws"
+	xsi:schemaLocation="
+       http://www.osgi.org/xmlns/blueprint/v1.0.0
+       http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+       http://camel.apache.org/schema/blueprint
+       http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+	<bean id="queryOfferingCommentInProcessor"
+		class="com.ai.sboss.proffer.processor.QueryOfferingCommentProcessor" />
+	<bean id="serviceOfferingInfoAggregation"
+		class="com.ai.sboss.proffer.processor.OfferingInfoDataAggregation" />
+	<bean id="getServiceDetailAggregation"
+		class="com.ai.sboss.proffer.processor.GetServiceDetailAggregation" />
+	<bean id="queryServicesAndCatalogsAggregation"
+		class="com.ai.sboss.proffer.processor.QueryServicesAndCatalogsAggregation" />
+	<bean id="getServiceTopicCatalogAggregation"
+		class="com.ai.sboss.proffer.processor.GetServiceTopicCatalogAggregation" />
+	<bean id="getServiceTopicTotalAggregation"
+		class="com.ai.sboss.proffer.processor.GetServiceTopicTotalAggregation" />
+
+	<bean id="offeringCommentsAggregation"
+		class="com.ai.sboss.proffer.processor.OfferingCommentsAggregation" />
+
+
+	<bean id="keepDataProcessor" class="com.ai.sboss.proffer.processor.KeepDataProcessor" />
+	<!-- input processors -->
+	<bean id="generalJettyInProcessor" class="com.ai.sboss.proffer.processor.GeneralJettyInProcessor" />
+
+	<bean id="queryServiceDetailInProcessor"
+		class="com.ai.sboss.proffer.processor.QueryServiceDetailProcessor" />
+
+    <bean id="queryCompServiceDetailInProcessor"
+		class="com.ai.sboss.proffer.processor.QueryCompServiceDetailProcessor" />
+
+	<bean id="queryOfferingListprocessor"
+		class="com.ai.sboss.proffer.processor.QueryOfferingListInProcessor" />
+	<bean id="GetOfferingLoopIdProcessor"
+		class="com.ai.sboss.proffer.processor.GetOfferingLoopIdProcessor" />
+	<bean id="GetOfferingIdListProcessor"
+		class="com.ai.sboss.proffer.processor.GetOfferingIdListProcessor" />
+	<bean id="getServiceIdListProcessor"
+		class="com.ai.sboss.proffer.processor.GetServiceIdListProcessor" />
+	<bean id="queryOfferingProviderInProcessor"
+		class="com.ai.sboss.proffer.processor.QueryOfferingProviderProcessor" />
+	<bean id="queryServicesAndCatalogsInProcessor"
+		class="com.ai.sboss.proffer.processor.QueryServicesAndCatalogsInProcessor" />
+	<bean id="queryServicesbyKeyInProcessor"
+		class="com.ai.sboss.proffer.processor.QueryServicesbyKeyInProcessor" />
+	<bean id="queryCatalogsbyKeyInProcessor"
+		class="com.ai.sboss.proffer.processor.QueryCatalogsbyKeyInProcessor" />
+	<bean id="getServiceTopicFilterCatalog"
+		class="com.ai.sboss.proffer.processor.GetServiceTopicFilterCatalog" />
+	<bean id="topicCleanDetailProcessor"
+		class="com.ai.sboss.proffer.processor.TopicCleanDetailProcessor" />
+	<bean id="catalogTotalServiceProcessor"
+		class="com.ai.sboss.proffer.processor.CatalogTotalServiceProcessor" />
+	<bean id="queryOfferProviderProcessor"
+		class="com.ai.sboss.proffer.processor.QueryOfferProviderProcessor" />
+	<bean id="queryCatalogByProdOfferingInProcessor"
+		class="com.ai.sboss.proffer.processor.QueryCatalogByProdOfferingInProcessor" />
+	<bean id="findServiceProcessTemplateProcessor"
+		class="com.ai.sboss.proffer.processor.FindServiceProcessTemplateProcessor" />
+	<bean id="findServiceSchemeInProcessor"
+		class="com.ai.sboss.proffer.processor.FindServiceSchemeInProcessor" />
+	<bean id="addServiceSchemeInProcessor"
+		class="com.ai.sboss.proffer.processor.AddServiceSchemeInProcessor" />
+	<bean id="delServiceSchemeInProcessor"
+		class="com.ai.sboss.proffer.processor.DelServiceSchemeInProcessor" />
+	<bean id="queryProposalListInProcessor"
+		class="com.ai.sboss.proffer.processor.QueryProposalListInProcessor" />
+	<bean id="findProposalDetailInProcessor"
+		class="com.ai.sboss.proffer.processor.FindProposalDetailInProcessor" />
+	<bean id="queryOfferPriceProcessor" 
+	    class="com.ai.sboss.proffer.processor.QueryOfferingPriceProcessor" />
+
+	<!-- Monica added for FindUpdateDataForProposal -->
+	<bean id="findUpdateDataForProposalInProcessor" class="com.ai.sboss.proffer.processor.FindUpdateDataForProposalInProcessor" />
+
+	<!-- out converters -->
+	<bean id="serviceOfferingInfoConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryOfferingInfoConvertor" />
+	<bean id="queryServiceTopicOutProcess"
+		class="com.ai.sboss.proffer.respconvertor.QueryServiceTopicConvertor" />
+	<bean id="serviceListConstructProcessor"
+		class="com.ai.sboss.proffer.processor.serviceListInfoConstructProcessor" />
+	<bean id="queryServiceInfoConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryServiceInfoConvertor" />
+
+
+	<bean id="queryServiceDetailConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryServiceDetailConvertor" />
+
+	<bean id="queryCompServiceInfoConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryCompServiceInfoConvertor" />
+
+	<bean id="serviceTopicConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryServiceTopicConvertor" />
+	<bean id="queryServiceCommentConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryServiceCommentConvertor" />
+	<bean id="offeringInfoRegularConvertor"
+		class="com.ai.sboss.proffer.respconvertor.OfferingInfoRegularConvertor" />
+	<bean id="queryServiceDatasByKey"
+		class="com.ai.sboss.proffer.respconvertor.QueryServiceDatasByKey" />
+	<bean id="queryServiceCatalogByTextConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryServiceCatalogByTextConvertor" />
+	<bean id="queryServicesbyKeyInnerConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryServicesbyKeyInnerConvertor" />
+	<bean id="queryServicesbyKeyConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryServicesbyKeyConvertor" />
+	<bean id="queryCatalogsbyKeyConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryCatalogsbyKeyConvertor" />
+	<bean id="queryServicesAndCatalogsConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryServicesAndCatalogsConvertor" />
+	<bean id="getServiceTopicConvertor"
+		class="com.ai.sboss.proffer.respconvertor.GetServiceTopicConvertor" />
+	<bean id="queryOfferProviderConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryOfferProviderConvertor" />
+	<bean id="queryCatalogByProdOfferingConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryCatalogByProdOfferingConvertor" />
+	<bean id="findServiceProcessTemplateConvertor"
+		class="com.ai.sboss.proffer.respconvertor.FindServiceProcessTemplateConvertor" />
+	<bean id="findServiceSchemeConvertor"
+		class="com.ai.sboss.proffer.respconvertor.FindServiceSchemeConvertor" />
+	<bean id="addServiceSchemeConvertor"
+		class="com.ai.sboss.proffer.respconvertor.AddServiceSchemeConvertor" />
+	<bean id="delServiceSchemeConvertor"
+		class="com.ai.sboss.proffer.respconvertor.DelServiceSchemeConvertor" />
+	<bean id="queryProposalListConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryProposalListConvertor" />
+	<bean id="serviceDetailCommentOutProcessor"
+		class="com.ai.sboss.proffer.respconvertor.ServiceDetailCommentOutProcessor" />
+
+		<bean id="compServiceDetailCommentOutProcessor"
+		class="com.ai.sboss.proffer.respconvertor.CompServiceDetailCommentOutProcessor" />
+
+	<bean id="findProposalDetailConvertor"
+		class="com.ai.sboss.proffer.respconvertor.FindProposalDetailConvertor" />
+	<!-- monica added for FindUpdateDataForProposal -->
+	<bean id="findUpdateDataForProposalOutProcessor" class="com.ai.sboss.proffer.respconvertor.FindUpdateDataForProposalOutProcessor" />
+	<bean id="queryOfferPriceConvertor" class="com.ai.sboss.proffer.respconvertor.QueryOfferingPriceConvertor" />
+	
+	<!-- revised for moujie -->
+	<bean id="queryDetailOfferingInfoConvertor"
+		class="com.ai.sboss.proffer.respconvertor.QueryDetailOfferingInfoConvertor" />
+	<bean id="queryServiceTopicInProcessor"
+		class="com.ai.sboss.proffer.processor.QueryServiceTopicInProcessor" />
+	<!-- fake processors start -->
+	<bean id="queryServiceTopicFake" class="com.ai.sboss.proffer.fake.QueryServiceTopicFake" />
+	<bean id="queryServiceDetailFake" class="com.ai.sboss.proffer.fake.QueryServiceDetailDataFake" />
+	<bean id="queryServiceItemsFake" class="com.ai.sboss.proffer.fake.QueryServiceItemsFake" />
+	<bean id="queryOfferingProviderDataFake" class="com.ai.sboss.proffer.fake.QueryOfferingProviderDataFake" />
+	<bean id="getCatalogListFake" class="com.ai.sboss.proffer.fake.GetCatalogListFake" />
+	<bean id="allServiceCatalogBean"
+		class="com.ai.sboss.proffer.fake.QueryAllServiceCatalogDataFake" />
+	<!-- fake processors end -->
+
+	<camelContext id="productoffering" trace="false"
+		xmlns="http://camel.apache.org/schema/blueprint">
+		<camel:endpoint id="crmEndpoint"
+			uri="jetty:http://10.5.1.247:5095/HubCrmServlet?bridgeEndpoint=true" />
+		<camel:endpoint id="queryServicesAndCatalogs"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryServicesAndCatalogs" />
+		<camel:endpoint id="getServiceTopic"
+			uri="jetty:http://0.0.0.0:8282/sboss/getServiceTopic" />
+		<camel:endpoint id="getService"
+			uri="jetty:http://0.0.0.0:8282/sboss/getService" />
+		<camel:endpoint id="queryOfferProvider"
+			uri="jetty:http://0.0.0.0:8282/sboss/queryOfferProvider" />
+		<!-- 查询服务流程模板 -->
+		<camel:endpoint id="findServiceProcessTemplate"
+			uri="jetty:http://0.0.0.0:8282/sboss/findServiceProcessTemplate" />
+		<camel:endpoint id="queryArrangementByArrangementid"
+			uri="jetty:http://localhost:8282/sboss/queryArrangementByArrangementid"></camel:endpoint>
+		<camel:endpoint id="queryOfferPrice" uri="jetty:http://0.0.0.0:8282/sboss/getPriceByOfferParameter" />
+
+		<!-- 查询服务流程模板 -->
+		<camel:route id="findServiceProcessTemplateRoute">
+			<camel:from ref="findServiceProcessTemplate" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:process ref="findServiceProcessTemplateProcessor" />
+			<camel:to ref="queryArrangementByArrangementid" />
+			<camel:process ref="findServiceProcessTemplateConvertor" />
+		</camel:route>
+
+		<!-- 查询上架的服务 -->
+		<camel:route id="queryOfferProviderRoute">
+			<camel:from ref="queryOfferProvider" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:process ref="queryOfferProviderProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="queryOfferProviderConvertor" />
+		</camel:route>
+
+		<camel:route id="queryServiceCatalogByText">
+			<camel:from
+				uri="jetty:http://0.0.0.0:8282/sboss/queryServiceCatalogByText" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryCatalogsbyKey" />
+			<camel:process ref="queryServiceCatalogByTextConvertor" />
+		</camel:route>
+
+		<camel:route id="getServiceDetail">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/getServiceDetail" />
+			<camel:process ref="generalJettyInProcessor" />
+			<!-- fake entry -->
+			<!-- <camel:process ref="queryServiceDetailFake" /> -->
+			<camel:multicast strategyRef="offeringCommentsAggregation"
+				parallelProcessing="true">
+				<camel:to uri="direct:getServiceDetailCRM" />
+				<camel:to uri="direct:queryOfferingComment" />
+			</camel:multicast>
+			<camel:process ref="serviceDetailCommentOutProcessor" />
+		</camel:route>
+
+		<!-- xj 查询复合服务和评论详情 -->
+		<camel:route id="getCompServiceDetail">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/getCompServiceDetail" />
+           <camel:process ref="generalJettyInProcessor" />
+
+              <camel:to uri="direct:getCompServiceDetailCRM" />
+
+
+		<!-- 	<camel:multicast strategyRef="offeringCommentsAggregation"
+				parallelProcessing="true">
+			 <camel:to uri="direct:getCompServiceDetailCRM" />
+				<camel:to uri="direct:queryOfferingComment" />
+			</camel:multicast> -->
+
+			<camel:process ref="compServiceDetailCommentOutProcessor" />
+		</camel:route>
+
+        	<!--xj 查询复合服务详情 -->
+		<camel:route id="queryCompServiceDetail">
+			<camel:from uri="direct:getCompServiceDetailCRM" />
+			<camel:process ref="queryCompServiceDetailInProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="queryCompServiceInfoConvertor" />
+		</camel:route>
+
+		<camel:route id="getAllServiceCatalog">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/getAllServiceCatalog" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:bean ref="allServiceCatalogBean" method="getResponse" />
+		</camel:route>
+
+		<camel:route id="getService">
+			<camel:from ref="getService" />
+			<camel:process ref="generalJettyInProcessor" />
+			<!-- 查询服务列表 -->
+			<camel:to uri="direct:queryOfferingList" />
+			<!-- 根据服务列表中的ID去轮询查询相应服务的详情信息 -->
+			<camel:process ref="GetOfferingIdListProcessor" />
+			<camel:split strategyRef="serviceOfferingInfoAggregation">
+				<camel:tokenize token=";" />
+				<camel:process ref="GetOfferingLoopIdProcessor" />
+				<camel:to uri="direct:queryServiceDetailAndComments" />
+			</camel:split>
+			<!-- 将查询到的服务详情列表转化为JSONArray，同时封装成前端数据包 -->
+			<camel:process ref="serviceListConstructProcessor" />
+		</camel:route>
+
+		<camel:route id="getServiceTopic">
+			<camel:from ref="getServiceTopic" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:multicast strategyRef="getServiceTopicCatalogAggregation"
+				parallelProcessing="true">
+				<camel:to uri="direct:getServiceTopicQueryCatalog" />
+				<camel:process ref="keepDataProcessor" />
+			</camel:multicast>
+			<!-- 根据传入参数筛选catalogid -->
+			<camel:process ref="getServiceTopicFilterCatalog" />
+			<!-- 将catalog列表分离并用于查找服务 -->
+			<camel:split strategyRef="getServiceTopicTotalAggregation">
+				<camel:tokenize token=";" />
+				<!-- 查询最基本的服务信息 原本想直接调用getService 但是构造getService的入参有点过于复杂 稍后可以将重复部分提取为一个direct路由 -->
+
+				<!-- 查询服务列表 -->
+				<camel:to uri="direct:queryOfferingList" />
+				<!-- 根据服务列表中的ID去轮询查询相应服务的详情信息 -->
+				<camel:process ref="getServiceIdListProcessor" />
+				<camel:split strategyRef="serviceOfferingInfoAggregation">
+					<camel:tokenize token=";" />
+					<!-- 复用getServiceDetail -->
+					<camel:to uri="direct:getServiceDetailCRM" />
+					<camel:process ref="topicCleanDetailProcessor" />
+				</camel:split>
+				<camel:process ref="catalogTotalServiceProcessor" />
+			</camel:split>
+			<camel:process ref="getServiceTopicConvertor" />
+		</camel:route>
+
+		<camel:route id="getServiceTopicQueryCatalog">
+			<camel:from uri="direct:getServiceTopicQueryCatalog" />
+			<!-- 查询catalog列表 -->
+			<camel:bean ref="allServiceCatalogBean" method="getResponse" />
+			<camel:process ref="getCatalogListFake" />
+		</camel:route>
+
+		<!-- 根据catalogId查询相关服务列表 -->
+		<camel:route id="queryServiceTopic">
+			<camel:from uri="direct:queryServiceTopic" />
+			<camel:process ref="queryServiceTopicInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+		<camel:route id="getServiceDetailCRM">
+			<camel:from uri="direct:getServiceDetailCRM" />
+			<camel:to uri="direct:queryServiceDetail" />
+			<camel:process ref="queryServiceInfoConvertor" />
+
+			<!-- 2015-09-29 不需要根据provider_id去查provider的信息，直接返回provider_id即可 -->
+
+			<!-- 根据当前provider_id的信息去查provider的信息 -->
+			<!-- camel:multicast strategyRef="getServiceDetailAggregation" parallelProcessing="true">
+				<camel:to uri="direct:queryOfferingProvider" /> <camel:process ref="keepDataProcessor"
+				/> </camel:multicast -->
+
+			<camel:process ref="queryServiceDetailConvertor" />
+		</camel:route>
+
+		<!-- 查询服务详情和评论的组合信息 -->
+		<camel:route id="queryServiceDetailAndComments">
+			<camel:from uri="direct:queryServiceDetailAndComments" />
+			<camel:to uri="direct:queryServiceDetail" />
+			<camel:process ref="serviceOfferingInfoConvertor" />
+			<camel:multicast strategyRef="getServiceDetailAggregation"
+				parallelProcessing="true">
+				<camel:to uri="direct:queryOfferingComment" />
+				<camel:process ref="keepDataProcessor" />
+			</camel:multicast>
+		</camel:route>
+
+		<!-- 查询服务详情 -->
+		<camel:route id="queryServiceDetail">
+			<camel:from uri="direct:queryServiceDetail" />
+			<camel:process ref="queryServiceDetailInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+		<!-- 根据catalogId查询相关服务列表 -->
+		<camel:route id="queryOfferingList">
+			<camel:from uri="direct:queryOfferingList" />
+			<camel:process ref="queryOfferingListprocessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+
+		<camel:route id="queryOfferingCommentRoute">
+			<camel:from uri="direct:queryOfferingComment" />
+			<camel:process ref="queryOfferingCommentInProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="queryServiceCommentConvertor" />
+		</camel:route>
+
+
+		<camel:route id="queryOfferingProvider">
+			<camel:from uri="direct:queryOfferingProvider" />
+			<camel:process ref="queryOfferingProviderInProcessor" />
+			<camel:process ref="queryOfferingProviderDataFake" />
+		</camel:route>
+
+		<!-- 按关键字查询服务和服务类 -->
+		<camel:route id="queryServicesAndCatalogs">
+			<camel:from ref="queryServicesAndCatalogs" />
+			<camel:process ref="generalJettyInProcessor" />
+			<!-- camel:process ref="queryServiceItemsFake" / -->
+			<camel:process ref="queryServicesAndCatalogsInProcessor" />
+			<camel:multicast strategyRef="queryServicesAndCatalogsAggregation"
+				parallelProcessing="true">
+				<camel:to uri="direct:queryServicesbyKey" />
+				<camel:to uri="direct:queryCatalogsbyKey" />
+			</camel:multicast>
+			<camel:process ref="queryServicesAndCatalogsConvertor" />
+		</camel:route>
+
+
+		<!-- 模糊查找相关服务 -->
+		<camel:route id="queryServicesbyKey">
+			<camel:from uri="direct:queryServicesbyKey" />
+			<camel:process ref="queryServicesbyKeyInProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="queryServicesbyKeyInnerConvertor" />
+			<!-- 查询服务详情获取价格url等信息 -->
+			<camel:split strategyRef="serviceOfferingInfoAggregation">
+				<camel:tokenize token=";" />
+				<camel:process ref="GetOfferingLoopIdProcessor" />
+				<camel:to uri="direct:queryServiceDetail" />
+				<camel:process ref="serviceOfferingInfoConvertor" />
+			</camel:split>
+			<camel:process ref="queryServicesbyKeyConvertor" />
+		</camel:route>
+
+		<!-- 模糊查找相关服务类 -->
+		<camel:route id="queryCatalogsbyKey">
+			<camel:from uri="direct:queryCatalogsbyKey" />
+			<camel:process ref="queryCatalogsbyKeyInProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="queryCatalogsbyKeyConvertor" />
+		</camel:route>
+
+
+		<!-- 获取服务对应的所有服务类 -->
+		<camel:route id="queryCatalogByProdOffering">
+			<camel:from
+				uri="jetty:http://0.0.0.0:8282/sboss/queryCatalogByProdOffering" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryCatalogByProdOfferingInCRM" />
+			<camel:process ref="queryCatalogByProdOfferingConvertor" />
+		</camel:route>
+
+		<camel:route id="queryCatalogByProdOfferingInCRM">
+			<camel:from uri="direct:queryCatalogByProdOfferingInCRM" />
+			<camel:process ref="queryCatalogByProdOfferingInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<!-- 获取服务对应的所有服务类 -->
+
+		<!-- 查询服务方案 -->
+		<camel:route id="getServiceScheme">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/getServiceScheme" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:findServiceSchemeInCRM" />
+			<camel:process ref="findServiceSchemeConvertor" />
+		</camel:route>
+
+		<camel:route id="findServiceSchemeInCRM">
+			<camel:from uri="direct:findServiceSchemeInCRM" />
+			<camel:process ref="findServiceSchemeInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+		<camel:route id="addServiceCategory">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/addServiceCategory" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:addServiceSchemeInCRM" />
+			<camel:process ref="addServiceSchemeConvertor" />
+		</camel:route>
+
+		<camel:route id="addServiceSchemeInCRM">
+			<camel:from uri="direct:addServiceSchemeInCRM" />
+			<camel:process ref="addServiceSchemeInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+		<camel:route id="delServiceCategory">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/delServiceCategory" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:delServiceSchemeInCRM" />
+			<camel:process ref="delServiceSchemeConvertor" />
+		</camel:route>
+
+		<camel:route id="delServiceSchemeInCRM">
+			<camel:from uri="direct:delServiceSchemeInCRM" />
+			<camel:process ref="delServiceSchemeInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+		<camel:route id="queryProposalList">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryProposalList" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:queryProposalListInCRM" />
+			<camel:process ref="queryProposalListConvertor" />
+		</camel:route>
+
+		<camel:route id="queryProposalListInCRM">
+			<camel:from uri="direct:queryProposalListInCRM" />
+			<camel:process ref="queryProposalListInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+		<camel:route id="findProposalDetail">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/findProposalDetail" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:findProposalDetailInCRM" />
+			<camel:process ref="findProposalDetailConvertor" />
+		</camel:route>
+
+		<camel:route id="findProposalDetailInCRM">
+			<camel:from uri="direct:findProposalDetailInCRM" />
+			<camel:process ref="findProposalDetailInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+
+		<!-- 查询服务方案 -->
+
+		<!-- monica added for findUpdateDataForProposal -->
+		<camel:route id="findUpdateDataForProposal">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/findUpdateDataForProposal" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:to uri="direct:findUpdateDataForProposalInCRM" />
+			<camel:process ref="findUpdateDataForProposalOutProcessor" />
+		</camel:route>
+
+		<camel:route id="findUpdateDataForProposalInCRM">
+			<camel:from uri="direct:findUpdateDataForProposalInCRM" />
+			<camel:process ref="findUpdateDataForProposalInProcessor" />
+			<camel:to ref="crmEndpoint" />
+		</camel:route>
+		<camel:route>
+			<camel:from ref="queryOfferPrice" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:process ref="queryOfferPriceProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="queryOfferPriceConvertor" />
+		</camel:route>
+	</camelContext>
+</blueprint>

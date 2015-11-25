@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor
+	license agreements. See the NOTICE file distributed with this work for additional
+	information regarding copyright ownership. The ASF licenses this file to
+	You under the Apache License, Version 2.0 (the "License"); you may not use
+	this file except in compliance with the License. You may obtain a copy of
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required
+	by applicable law or agreed to in writing, software distributed under the
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
+	OF ANY KIND, either express or implied. See the License for the specific
+	language governing permissions and limitations under the License. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ctx="http://www.springframework.org/schema/context"
+	xmlns:camel="http://camel.apache.org/schema/spring" xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://www.springframework.org/schema/osgi-compendium http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd">
+	<!-- query order list -->
+	<bean id="generalJettyInProcessor" class="com.ai.sboss.order.processor.GeneralJettyInProcessor" />
+	<!-- query order list -->
+
+	<!-- query order list -->
+	<bean id="keepDataProcessor" class="com.ai.sboss.order.processor.KeepDataProcessor" />
+	<bean id="submitOrderAggregation" class="com.ai.sboss.order.aggregator.SubmitOrderAggregation" />
+
+	<!-- response convertor -->
+	<!-- response convertor -->
+
+	<camel:camelContext id="camelContext" trace="false"
+		xmlns="http://camel.apache.org/schema/blueprint">
+		<camel:endpoint id="crmEndpoint"
+			uri="jetty:http://10.5.1.247:5095/HubCrmServlet?bridgeEndpoint=true" />
+		<camel:endpoint id="updateCustomerOrderStatusEndPoint"
+			uri="jetty:http://0.0.0.0:8282/sboss/updateOrderStatus" />
+		<camel:endpoint id="submitOrder"
+			uri="jetty:http://0.0.0.0:8282/sboss/submitOrder" />
+		<!-- 4.1.5. 查询服务流程实例 -->
+		<camel:endpoint id="findServiceProcessInstance"
+			uri="jetty:http://0.0.0.0:8282/sboss/findServiceProcessInstance" />
+		<camel:endpoint id="queryArrangementInstancesByidWithSet"
+			uri="jetty:http://localhost:8282/sboss/queryArrangementInstancesByidWithSet" />
+		<camel:endpoint id="findServiceProcessInstanceByOrderID"
+			uri="jetty:http://0.0.0.0:8282/sboss/findProcessInstanceByOrderID" />
+		<camel:endpoint id="queryArrangementInstancesByBusinessidWithSet"
+			uri="jetty:http://localhost:8282/sboss/queryArrangementInstancesByBusinessidWithSet" />
+		<camel:endpoint id="checkCustomerOrderStateEndPoint"
+			uri="jetty:http://0.0.0.0:8282/sboss/customerOrderStateAlarm" />
+		<camel:endpoint id="changeOrderStateToDisableEndPoint"
+			uri="jetty:http://0.0.0.0:8282/sboss/changeOrderStateToDisable" />
+
+
+
+		<!-- 查询服务流程实例 -->
+		<camel:route id="findServiceProcessInstanceRoute">
+			<camel:from ref="findServiceProcessInstance" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:process ref="findServiceProcessInstanceProcessor" />
+			<camel:to ref="queryArrangementInstancesByidWithSet" />
+			<camel:process ref="findServiceProcessInstanceConvertor" />
+		</camel:route>
+
+		<!-- 根据OrderID查询服务流程实例 -->
+		<camel:route id="findServiceProcessInstanceRouteByOrderID">
+			<camel:from ref="findServiceProcessInstanceByOrderID" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:process ref="findServiceProcessInstanceByOrderIDProcessor" />
+			<camel:to ref="queryArrangementInstancesByBusinessidWithSet" />
+			<camel:process ref="findServiceProcessInstanceByOrderIDConvertor" />
+		</camel:route>
+
+
+		<camel:route id="submitOrder">
+			<camel:from ref="submitOrder" />
+			<camel:process ref="generalJettyInProcessor" />
+			<!-- 模拟接口 -->
+			<!-- <camel:bean id="submitOrderBean" beanType="com.ai.sboss.order.fake.OrderSubmitParamFake"
+				method="submitOrder" /> -->
+			<camel:to uri="direct:submitOrder" />
+			<!-- <camel:process ref="submitOrderConvertor" /> -->
+		</camel:route>
+
+		<!-- 更改订单状态 -->
+		<camel:route id="updateCustomerOrderStatus">
+			<camel:from ref="updateCustomerOrderStatusEndPoint" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:process ref="updateCustomerOrderStatusInProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="updateCustomerOrderStatusConvertor" />
+		</camel:route>
+
+		<!-- 查询订单详情 -->
+	<!-- 	<camel:route id="queryOrderDetail">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryOrderDetail" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryOrderDetailProcessor" />
+			将请求提交给CRM
+			<camel:to ref="crmEndpoint" />
+
+			query service details , 这里开始重用，queryOrderListSplitPrepareProcessor最多只有一个order
+				queryOrderListSplitPrepareProcessor主要是为了统计查询得到的order的数量，给定一个合并依据uuid
+			<camel:to uri="direct:querySomeOrdersCRM"></camel:to>
+
+			<camel:process ref="queryOrdersConvertor" />
+		</camel:route> -->
+
+				<!-- xj 查询订单详情 -->
+		<camel:route id="queryOrderDetail">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryOrderDetail" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryOrderDetailProcessor" />
+			<!-- 将请求提交给CRM -->
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="QueryOrdersDetailConvertor" />
+		</camel:route>
+
+
+		<camel:route id="queryCompOrderDetail">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryCompOrderDetail"/>
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<camel:process ref="queryCompOrderDetailProcessor"/>
+			<!-- 将请求提交给CRM -->
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="QueryCompOrdersDetailConvertor" />
+		</camel:route>
+
+
+		<camel:route id="rqueryOrderList">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryOrderList" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<!-- input json paramter -->
+			<camel:process ref="queryOrderListProcessor" />
+			<!-- query CRM7 -->
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="queryOrdersListConvertor" />
+		</camel:route>
+
+		<!-- 查询符合条件的订单列表数量 -->
+		<camel:route id="rqueryOrderNumber">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryOrderNumber" />
+			<camel:process ref="generalJettyInProcessor"></camel:process>
+			<!-- input json paramter -->
+			<camel:process ref="queryOrderNumberProcessor" />
+			<!-- query CRM7 -->
+			<camel:to ref="crmEndpoint" />
+
+			<!-- get CRM reslut and convertor json then output -->
+			<camel:process ref="queryOrderNumberConvertor" />
+		</camel:route>
+
+		<!-- Query list of Customer Order begin -->
+		<camel:route id="rqueryCustomerOrder">
+			<camel:from uri="direct:rqueryCustomerOrder" />
+			<camel:process ref="queryCustomerOrderProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<!-- <camel:bean ref="queryCustomerOrderConvertor" method="convert"/> -->
+		</camel:route>
+
+		<camel:route id="acquireCustomerOrderInventory">
+			<camel:from uri="direct:acquireCustomerOrderInventory" />
+			<camel:process ref="acquireCustomerOrderInventoryProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<!-- <camel:bean ref="acquireCustomerOrderInventoryConvertor" method="convert"/> -->
+		</camel:route>
+
+		<camel:route id="rqueryOrderListExt">
+			<camel:from uri="jetty:http://0.0.0.0:8282/sboss/queryOrderListExt" />
+			<camel:to uri="direct:rqueryCustomerOrder" />
+			<camel:process ref="getOrderIdListProcessor" />
+			<camel:split strategyRef="customerOrdersAggregationProcessor">
+				<camel:tokenize token="," />
+				<camel:process ref="acquireCustomerOrderDetailLoopProcessor" />
+				<camel:to uri="direct:acquireCustomerOrderInventory" />
+				<camel:process ref="extractCustomerOrderDetailInvProcessor" />
+			</camel:split>
+		</camel:route>
+		<!-- Query list of Customer Order begin end -->
+
+		<camel:route id="submitOrderRoute">
+			<camel:from uri="direct:submitOrder" />
+			<camel:process ref="submitOrderInProcessor" />
+			<camel:to uri="crmEndpoint" />
+			<camel:process ref="submitOrderConvertor" />
+		</camel:route>
+
+		<!-- 提交给CRM，生成orderId -->
+		<camel:route id="submitOrderCRM">
+			<camel:from uri="direct:submitOrderCRM" />
+			<camel:process ref="submitOrderInProcessor" />
+			<camel:to uri="crmEndpoint" />
+		</camel:route>
+
+		<!-- 查询一个订单还是多个订单，都重用这个路由querySomeOrdersCRM -->
+		<camel:route id="querySomeOrdersCRM">
+			<camel:from uri="direct:querySomeOrdersCRM"></camel:from>
+			<camel:process ref="queryOrderListSplitPrepareProcessor"></camel:process>
+			<!-- 这里说明一下，如果没有查询到任何的order信息，就不需要进行split处理了，直接相应客户端就行了 strategyRef：这个属性是split的合并器 -->
+			<camel:choice>
+				<camel:when>
+					<camel:simple>${in.header.orderlistSize} != 0</camel:simple>
+					<camel:split parallelProcessing="true"
+						strategyRef="queryOrderListAggregator">
+						<camel:jsonpath>$.data</camel:jsonpath>
+						<!-- 每一条拆分得到的order记录，都要按照offer_id进行serverDetail的查询 -->
+						<camel:process ref="queryServiceDetailProcessor"></camel:process>
+						<!-- 2015-08-27 之后不再需要再进行serverDetail的查询 -->
+						<!-- camel:to ref="crmEndpoint"></camel:to -->
+					</camel:split>
+				</camel:when>
+			</camel:choice>
+		</camel:route>
+
+		<camel:route id="checkCustomerOrderState">
+			<camel:from ref="checkCustomerOrderStateEndPoint" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:process ref="checkCustomerOrderStateInProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="checkCustomerOrderStateConvertor" />
+		</camel:route>
+
+		<camel:route id="changeOrderStateToDisable">
+			<camel:from ref="changeOrderStateToDisableEndPoint" />
+			<camel:process ref="generalJettyInProcessor" />
+			<camel:process ref="changeOrderStateToDisableInProcessor" />
+			<camel:to ref="crmEndpoint" />
+			<camel:process ref="changeOrderStateToDisableConvertor" />
+		</camel:route>
+
+	</camel:camelContext>
+</beans>

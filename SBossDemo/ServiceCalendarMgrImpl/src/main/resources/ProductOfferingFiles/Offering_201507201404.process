@@ -1,0 +1,40 @@
+{
+"data": {
+"offerId": 201507201404,
+"offerName": "Find a local guide  Deep tour SANTORINI",
+"serviceIntroUrl": "http://static.wixstatic.com/media/3223a3_facaa5432e9a490589f0cb67a4088dd9.jpg_srz_p_220_190_75_22_0.50_1.20_0.00_jpg_srz",
+"serviceThumbnailUrl": "",
+"serviceProviderUrl": "http://shiroube.com/system/avatars/8160/small/Passph.%201%20inch%2017.07.15.jpg?1437359591",
+"serviceIntro": "I am very keen to give the requisite tours visitors may need and i give all kind of tours travelers may need.",
+"serviceProvider": "",
+"serviceRating": 5,
+"servicePrice": "￥4220/3DAY",
+"offerProcess": [
+{
+"stepNum": 1,
+"stepDesc": "Set off",
+"timeOffset": -60
+},
+{
+"stepNum": 2,
+"stepDesc": "Receive guests",
+"timeOffset": 0
+},
+{
+"stepNum": 3,
+"stepDesc": "Arrive destination",
+"timeOffset": 55
+},
+{
+"stepNum": 4,
+"stepDesc":"Guiding",
+"timeOffset": 60
+},
+{
+"stepNum": 5,
+"stepDesc":"Send guests",
+"timeOffset": 4000
+}
+]
+}
+}

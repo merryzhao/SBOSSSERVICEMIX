@@ -1,0 +1,40 @@
+{
+"data": {
+"offerId": 201507270944,
+"offerName": "Hao Xian Sheng Family Dinner",
+"serviceIntroUrl": "http://i3.s2.dpfile.com/pc/mc/3c045bf8f03463f51b5bd35232031062(450c280)/aD0yODAmaz0vcGMvbWMvM2MwNDViZjhmMDM0NjNmNTFiNWJkMzUyMzIwMzEwNjImbG9nbz0wJm09YyZ3PTQ1MA.41612c1255f978eb3c474336adfb7955/thumb.jpg",
+"serviceThumbnailUrl": "",
+"serviceProviderUrl": "http://www.guoshu123.cn/file/upload/201410/24/18-33-56-87-1.jpg",
+"serviceIntro": "Family Dinner with High Quality",
+"serviceProvider": "",
+"serviceRating": 5,
+"servicePrice": "￥1000/10PEOPLE",
+"offerProcess": [
+{
+"stepNum": 1,
+"stepDesc": "Preparation",
+"timeOffset": -60
+},
+{
+"stepNum": 2,
+"stepDesc": "Set off",
+"timeOffset": -20
+},
+{
+"stepNum": 3,
+"stepDesc": "Arrive home",
+"timeOffset": 0
+},
+{
+"stepNum": 4,
+"stepDesc":"Cooking",
+"timeOffset": 45
+},
+{
+"stepNum": 5,
+"stepDesc":"Done",
+"timeOffset": 90
+}
+]
+}
+}

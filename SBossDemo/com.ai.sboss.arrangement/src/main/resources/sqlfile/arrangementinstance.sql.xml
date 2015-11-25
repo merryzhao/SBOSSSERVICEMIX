@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLDescribe>
+	<sql name="IArrangementInstanceDAO.queryArrangementInstancesByUserid" type="hql" exe="select">
+		from ArrangementInstanceEntity u where u.creator = :userid
+		<isnull param="statu" >
+		AND u.statu = :statu
+		</isnull>
+	</sql>
+	
+	<sql name="IArrangementInstanceDAO.queryArrangementInstancesByBusinessID" type="hql" exe="select">
+		from ArrangementInstanceEntity u 
+		left join fetch u.arrangement a
+		where u.businessID = :businessid
+		<isnull param="statu" >
+		AND u.statu = :statu
+		</isnull>
+	</sql>
+	
+	<sql name="IArrangementInstanceDAO.queryArrangementInstancesByID" type="hql" exe="select">
+		from ArrangementInstanceEntity u 
+		left join fetch u.arrangement a
+		where u.uid = :arrangementInstancesid
+	</sql>
+	
+	<sql name="IArrangementInstanceDAO.updateArrangementInstanceStatu" type="sql" exe="update" >
+		UPDATE I_ARRANGEMENTINSTANCE SET STATE = :statu WHERE UUID = :arrangementInstanceId
+	</sql>
+	
+	<sql name="IArrangementInstanceDAO.updateArrangementInstanceCompletedStatu" type="sql" exe="update" >
+		UPDATE I_ARRANGEMENTINSTANCE SET STATE = 'completed' , END_TIME = :endTime WHERE UUID = :arrangementInstanceId
+	</sql>
+</SQLDescribe>

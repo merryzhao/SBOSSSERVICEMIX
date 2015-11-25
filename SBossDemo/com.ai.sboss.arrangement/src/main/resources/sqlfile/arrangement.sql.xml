@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLDescribe>
+	<sql name="IArrangementDAO.queryArrangementByTradeidWithoutSet" type="hql" exe="select">
+		from ArrangementEntity u where u.tradeid = :tradeid
+		<isnull param="scope">
+			and u.tradeScope = :scope
+		</isnull>
+		order by u.uid asc
+	</sql>
+	
+	<sql name="IArrangementDAO.getArrangementWithoutSet" type="hql" exe="select">
+		from ArrangementEntity u where u.uid = :arrangementuid
+	</sql>
+	
+	<sql name="IArrangementDAO.queryArrangementByTradeidPageWithoutSet" type="hql" exe="select">
+		from ArrangementEntity u where u.tradeid = :tradeid
+		<isnull param="scope">
+			and u.tradeScope = :scope
+		</isnull>
+		order by u.uid asc
+	</sql>
+	
+		<sql name="IArrangementDAO.getArrangementWithSet" type="hql" exe="select">
+		from ArrangementEntity u  
+		left join fetch u.jointmapping jm 
+		left join fetch jm.joint
+		left join fetch u.childArrangements ca 
+		left join fetch ca.arrangement
+		where u.uid = :arrangementuid
+	</sql>
+	
+
+</SQLDescribe>

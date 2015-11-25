@@ -1,0 +1,45 @@
+{
+    "arrangement": {
+        "creator": "chaos",
+        "creatorScope": "producer",
+        "displayName": "全面贯通测试流程",
+        "tradeid":"9999123",
+        "tradescope":"industry",
+        "joints": [
+            {
+                "id": "a19e8efb-c3b2-4d65-bf5e-7fd7e5455403",
+                "visible": "true",
+                "absOffsettime": 800000,
+                "relateOffsettime": 700000
+            },
+            {
+                "id": "da4e4181-7d86-4196-9c40-794869775998",
+                "visible": "true",
+                "absOffsettime": 900000,
+                "relateOffsettime": 800000
+            },
+            {
+                "id": "345e0d51-1e2b-45ec-b981-fbfe1c1ab651",
+                "visible": "true",
+                "absOffsettime": 1000000,
+                "relateOffsettime": 900000
+            }
+        ],
+        "arrangements": [
+            {
+                "id": "1232434",
+                "visible": "true"
+            }
+        ],
+        "flows": [
+            {
+                "source": "joint:a19e8efb-c3b2-4d65-bf5e-7fd7e5455403",
+                "target": "joint:da4e4181-7d86-4196-9c40-794869775998"
+            },
+            {
+                "source": "joint:da4e4181-7d86-4196-9c40-794869775998",
+                "target": "joint:345e0d51-1e2b-45ec-b981-fbfe1c1ab651"
+            }
+        ]
+    }
+}
